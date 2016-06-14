@@ -1,10 +1,8 @@
 package src;
 
 import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 
 public class Background {
@@ -14,11 +12,14 @@ public class Background {
 	
 	public Background(){
 		
-		try{
-			image = ImageIO.read(new File("fond.png"));
+		/*try{
+			image = ImageIO.read(new File("Resources/fond.png"));
 		}catch(IOException e){
 			e.printStackTrace();
-		}
+		}*/
+		
+		ImageIcon ii = new ImageIcon(getClass().getResource("/fond.png"));
+        image = ii.getImage();
 		
 		pos_x = this.getWidth() - 500;
 		
