@@ -24,11 +24,11 @@ public class GameOver extends JPanel{
 	 * the result is the number of aliens left 
 	 * if there is no more aliens, the player win the game and the screen is different
 	 */
-	public GameOver(int score, int result){
+	public GameOver(int score, int result, int life){
 			
 		this.result = "Your score : " + score ;
 		
-		if(result==0)
+		if(result==0 && life >= 0)
 			win = true;
 		
 		

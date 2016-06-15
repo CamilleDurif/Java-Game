@@ -17,10 +17,12 @@ public class Frame extends JFrame implements ActionListener{
 	public static Frame frame;
 	
 	private JButton bouton;
+	private JButton boutonStart;
 	
 	private CardLayout cl = new CardLayout(); //this layout is used to switch from different JPanel
 	private JPanel content = new JPanel(); //this JPanl will contain the panel for the game of the panel for the game over screen
 	private Game game;
+	//private Menu menu;
 	
 	public Frame(){
 		
@@ -32,19 +34,25 @@ public class Frame extends JFrame implements ActionListener{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		
-		ImageIcon img = new ImageIcon("logo.png");
+		ImageIcon img = new ImageIcon(getClass().getResource("/logo.png"));
 		this.setIconImage(img.getImage());
 		
-		Game game = new Game();
+		Menu menu = new Menu();
+		//Game game = new Game();
 		
 		bouton = new JButton("Try Again");
 		bouton.addActionListener(this);
 		
+		boutonStart = new JButton("New Game");
+		boutonStart.addActionListener(this);
+		
 		content.setLayout(cl);
-		content.add(game, "Game");
+		//content.add(game, "Game");
+		content.add(menu, "Menu");
 	    
-	    this.getContentPane().add(content, BorderLayout.CENTER); 
-	    
+	    this.getContentPane().add(content, BorderLayout.CENTER);
+	    this.add(boutonStart, BorderLayout.SOUTH);
+	    //cl.show(content, "Menu");
 	
 	}
 	
@@ -55,12 +63,26 @@ public class Frame extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e){
 		
+		if(e.getSource() == bouton)
+			doGameOver();
+		else
+			doStart();
+			
+	}
+	
+	public void doGameOver(){
 		content.removeAll();
 		game = new Game();
 		content.add(game, "Game");
 		cl.show(content, "Game");
 		this.remove(bouton);
-			
+	}
+	
+	public void doStart(){
+		game = new Game();
+		content.add(game, "Game");
+		cl.show(content, "Game");
+		this.remove(boutonStart);
 	}
 	
 	public static Frame getFrame(){
@@ -73,9 +95,9 @@ public class Frame extends JFrame implements ActionListener{
 	 * this function is called by the game panel when the game is finished
 	 * it adds a new gameover panel to the content, which is the one shown by the content
 	 */
-	public void gameOver(int score, int result){
+	public void gameOver(int score, int result, int life){
 		
-		GameOver gameover = new GameOver(score, result);
+		GameOver gameover = new GameOver(score, result, life);
 		content.add(gameover, "GameOver");
 		cl.show(content, "GameOver");
 		this.add(bouton, BorderLayout.SOUTH);

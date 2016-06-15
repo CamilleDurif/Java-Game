@@ -2,6 +2,7 @@ package src;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -29,11 +30,15 @@ public class Game extends JPanel implements ActionListener{
 	
 	private int score;
 	
+	private int life;
+	
 	private boolean ingame;
 	private final int B_WIDTH = 480;
 	private final int B_HEIGHT = 360;
 		
 	private ArrayList<Alien> aliens;
+	private ArrayList<Wall> walls;
+	private ArrayList<Life> lives;
 	
 	public Game(){
 		
@@ -49,6 +54,7 @@ public class Game extends JPanel implements ActionListener{
 		
 		ingame = true;
 		score = 0;
+		life = 3;
 		
 		setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
 			
@@ -57,6 +63,9 @@ public class Game extends JPanel implements ActionListener{
 		back = new Background();
 		
 		initAliens();
+		
+		walls = new ArrayList<>();
+		lives = new ArrayList<>();
 		
 		timer = new Timer(DELAY, this);
 		timer.start();
@@ -83,6 +92,7 @@ public class Game extends JPanel implements ActionListener{
 			
 		}
 	}
+	
 	
 	/*
 	 * this function will paint every sprite that is visible at the moment and the background
@@ -116,8 +126,21 @@ public class Game extends JPanel implements ActionListener{
         		g.drawImage(a.getImage(), a.getX(), a.getY(), this);
         }
         
+        for (Wall w : walls){
+        	if(w.isVisible())
+        		g2d.drawImage(w.getImage(), w.getX(), w.getY(), this);
+        }
+        
+        for (Life l : lives){
+        	if(l.isVisible())
+        		g2d.drawImage(l.getImage(), l.getX(), l.getY(), this);
+        }
+        
+        Font f = new Font("Dialog", Font.BOLD,20);
+        g.setFont(f);
         g.setColor(Color.WHITE);
-        g.drawString("Aliens left : " + aliens.size(), 5, 15);
+        g.drawString("Aliens left : " + aliens.size(), 5, 20);
+        g.drawString("Life left : " + life, 5, 40);
 	}
 	
 	@Override
@@ -130,6 +153,8 @@ public class Game extends JPanel implements ActionListener{
 		updateMissiles();
         updateCraft();
         updateAliens();
+        updateWalls();
+        updateLives();
         
         checkCollisions();
         
@@ -146,7 +171,7 @@ public class Game extends JPanel implements ActionListener{
 		if(!ingame){
 			timer.stop();
 			Frame frame = Frame.getFrame();
-			frame.gameOver(score, aliens.size());
+			frame.gameOver(score, aliens.size(), life);
 			
 		}
 	}
@@ -177,7 +202,12 @@ public class Game extends JPanel implements ActionListener{
 	    }
 		
 	private void updateCraft() {
-			 
+		
+		if(life < 0){
+			craft.vis = false;
+			ingame = false;
+		}
+		
 		if(craft.isVisible())
 			craft.move();
 	}
@@ -217,6 +247,52 @@ public class Game extends JPanel implements ActionListener{
 		
 	}
 	
+	public void updateWalls(){
+		
+		Random rand = new Random();
+		int spawn = rand.nextInt(1000);
+		
+		if(spawn > 990){
+			int posY = rand.nextInt(B_HEIGHT);
+			int posX = rand.nextInt(B_WIDTH) + 400;
+			
+			if(posY > 300) posY -= 100 ;
+		
+			walls.add(new Wall(posX, posY));}
+		
+		for (int i = 0; i <walls.size(); i++){
+			Wall w = walls.get(i);
+			if (w.isVisible())
+				w.move();
+			else 
+				walls.remove(i);
+		}
+		
+	}
+	
+	public void updateLives(){
+		
+		Random rand = new Random();
+		int spawn = rand.nextInt(1000);
+		
+		if(spawn > 990 && lives.size()==0){
+			int posY = rand.nextInt(B_HEIGHT);
+			int posX = rand.nextInt(B_WIDTH) + 400;
+			
+			if(posY > 300) posY -= 100 ;
+		
+			lives.add(new Life(posX, posY));}
+		
+		for (int i = 0; i <lives.size(); i++){
+			Life l = lives.get(i);
+			if (l.isVisible())
+				l.move();
+			else 
+				lives.remove(i);
+		}
+		
+	}
+	
 	/*
 	 * the collisions are verified by simple rectangles
 	 * the detection is then not really good because the picture of the player is not a rectangle
@@ -225,28 +301,46 @@ public class Game extends JPanel implements ActionListener{
 	public void checkCollisions(){
 		
 
-        Rectangle r3 = craft.getBounds();
+        Rectangle rC = craft.getBounds();
 
         for (Alien alien : aliens) {
-            Rectangle r2 = alien.getBounds();
+            Rectangle rA = alien.getBounds();
 
-            if (r3.intersects(r2)) {
-                craft.setVisible(false);
-                ingame = false;
+            if (rC.intersects(rA)) {
+            	alien.setVisible(false);
+                //craft.setVisible(false);
+                //ingame = false;
+                life--;
             }
+        }
+        
+        for(Wall wall : walls){
+        	Rectangle rW = wall.getBounds();
+        	if(rC.intersects(rW)){
+        		craft.setVisible(false);
+        		ingame = false;
+        	}
+        }
+        
+        for(Life l : lives){
+        	Rectangle rL = l.getBounds();
+        	if(rC.intersects(rL)){
+        		life++;
+        		l.setVisible(false);
+        	}
         }
 
         ArrayList<Missile> ms = craft.getMissiles();
 
         for (Missile m : ms) {
 
-            Rectangle r1 = m.getBounds();
+            Rectangle rM = m.getBounds();
 
             for (Alien alien : aliens) {
 
-                Rectangle r2 = alien.getBounds();
+                Rectangle rA = alien.getBounds();
 
-                if (r1.intersects(r2)) {
+                if (rM.intersects(rA)) {
                     m.setVisible(false);
                     alien.setVisible(false);
                     score++;
