@@ -39,6 +39,7 @@ public class Game extends JPanel implements ActionListener{
 	private ArrayList<Alien> aliens;
 	private ArrayList<Wall> walls;
 	private ArrayList<Life> lives;
+	private ArrayList<Alien2> aliens2;
 	
 	public Game(){
 		
@@ -66,6 +67,8 @@ public class Game extends JPanel implements ActionListener{
 		
 		walls = new ArrayList<>();
 		lives = new ArrayList<>();
+		aliens2 = new ArrayList<>();
+		aliens2.add(new Alien2(500,20));
 		
 		timer = new Timer(DELAY, this);
 		timer.start();
@@ -136,6 +139,11 @@ public class Game extends JPanel implements ActionListener{
         		g2d.drawImage(l.getImage(), l.getX(), l.getY(), this);
         }
         
+        for (Alien2 a : aliens2){
+        	if(a.isVisible())
+        		g.drawImage(a.getImage(), a.getX(), a.getY(), this);
+        }
+        
         Font f = new Font("Dialog", Font.BOLD,20);
         g.setFont(f);
         g.setColor(Color.WHITE);
@@ -155,6 +163,7 @@ public class Game extends JPanel implements ActionListener{
         updateAliens();
         updateWalls();
         updateLives();
+        updateAliens2();
         
         checkCollisions();
         
@@ -171,7 +180,7 @@ public class Game extends JPanel implements ActionListener{
 		if(!ingame){
 			timer.stop();
 			Frame frame = Frame.getFrame();
-			frame.gameOver(score, aliens.size(), life);
+			frame.gameOver(score, aliens.size() + aliens2.size(), life);
 			
 		}
 	}
@@ -243,7 +252,9 @@ public class Game extends JPanel implements ActionListener{
 			
 			if(posY > 300) posY -= 100 ;
 		
-			aliens.add(new Alien(posX, posY));}
+				aliens.add(new Alien(posX, posY));
+			
+			}
 		
 	}
 	
@@ -293,6 +304,29 @@ public class Game extends JPanel implements ActionListener{
 		
 	}
 	
+	public void updateAliens2(){
+		
+		Random rand = new Random();
+		int spawn = rand.nextInt(1000);
+		
+		if(spawn > 990 && aliens2.size()==0){
+			int posY = rand.nextInt(B_HEIGHT);
+			int posX = rand.nextInt(B_WIDTH) + 400;
+			
+			if(posY > 300) posY -= 100 ;
+		
+			aliens2.add(new Alien2(posX, posY));}
+		
+		for (int i = 0; i <aliens2.size(); i++){
+			Alien2 a = aliens2.get(i);
+			if (a.isVisible())
+				a.move();
+			else 
+				aliens2.remove(i);
+		}
+		
+	}
+	
 	/*
 	 * the collisions are verified by simple rectangles
 	 * the detection is then not really good because the picture of the player is not a rectangle
@@ -303,15 +337,23 @@ public class Game extends JPanel implements ActionListener{
 
         Rectangle rC = craft.getBounds();
 
-        for (Alien alien : aliens) {
+        for (Alien alien : aliens){
             Rectangle rA = alien.getBounds();
 
             if (rC.intersects(rA)) {
             	alien.setVisible(false);
-                //craft.setVisible(false);
-                //ingame = false;
                 life--;
             }
+        }
+        
+        for(Alien2 alien : aliens2){
+        	Rectangle rA2 = alien.getBounds();
+        	if(rC.intersects(rA2)){
+        		alien.setVisible(false);
+        		life -= 2;
+        	}
+        	
+        	
         }
         
         for(Wall wall : walls){
@@ -345,6 +387,18 @@ public class Game extends JPanel implements ActionListener{
                     alien.setVisible(false);
                     score++;
                 }
+            }
+            
+            for(Alien2 alien : aliens2){
+            	Rectangle rA2 = alien.getBounds();
+            	if(rM.intersects(rA2)){
+            		m.setVisible(false);
+            		alien.count--; 
+            		if(alien.count == 0){
+            			alien.setVisible(false);
+            			score++;
+            		}
+            	}
             }
         }
     }
