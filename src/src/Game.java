@@ -29,8 +29,8 @@ public class Game extends JPanel implements ActionListener{
 	private Background back;
 	
 	private int score;
-	
 	private int life;
+	private int spawned;
 	
 	private boolean ingame;
 	private final int B_WIDTH = 480;
@@ -56,6 +56,7 @@ public class Game extends JPanel implements ActionListener{
 		ingame = true;
 		score = 0;
 		life = 3;
+		spawned = 0;
 		
 		setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
 			
@@ -94,6 +95,8 @@ public class Game extends JPanel implements ActionListener{
 			aliens.add(new Alien(posX, posY));
 			
 		}
+		
+		Alien.setSpeed(3);
 	}
 	
 	
@@ -149,6 +152,7 @@ public class Game extends JPanel implements ActionListener{
         g.setColor(Color.WHITE);
         g.drawString("Aliens left : " + aliens.size(), 5, 20);
         g.drawString("Life left : " + life, 5, 40);
+        g.drawString("Spawned : " + spawned, 5, 60);
 	}
 	
 	@Override
@@ -164,6 +168,8 @@ public class Game extends JPanel implements ActionListener{
         updateWalls();
         updateLives();
         updateAliens2();
+        
+        updateSpeed();
         
         checkCollisions();
         
@@ -189,8 +195,7 @@ public class Game extends JPanel implements ActionListener{
 	private void updateBackground(){
 		
 		if(ingame)
-			back.move();
-		
+			back.move();		
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -229,7 +234,8 @@ public class Game extends JPanel implements ActionListener{
 	 */
 	private void updateAliens(){
 		
-		if(aliens.isEmpty()){
+		//if(aliens.isEmpty()){
+		if(spawned >= 100){
 			ingame = false;
 			return;
 		}
@@ -239,37 +245,51 @@ public class Game extends JPanel implements ActionListener{
 			Alien a = aliens.get(i);
 			if(a.isVisible())
 				a.move();
-			else
+			else{
 				aliens.remove(i);
+				spawned++;
+				}
 		}
 		
 		Random rand = new Random();
 		int spawn = rand.nextInt(1000);
+		int alienX =0;
+		int alienY =0;
 		
 		if(spawn > 980 && aliens.size() < 10){
 			int posY = rand.nextInt(B_HEIGHT);
 			int posX = rand.nextInt(B_WIDTH) + 400;
 			
 			if(posY > 300) posY -= 100 ;
-		
-				aliens.add(new Alien(posX, posY));
 			
+			if(posX-alienX > 50 && posY-alienY > 50){
+				aliens.add(new Alien(posX, posY));
+				alienX = posX;
+				alienY = posY;
 			}
-		
+		}
 	}
 	
 	public void updateWalls(){
 		
+		int wallX = 0;
+		int wallY = 0;
+		
 		Random rand = new Random();
 		int spawn = rand.nextInt(1000);
 		
-		if(spawn > 990){
+		if(spawn > 990 && walls.size()<=2){
 			int posY = rand.nextInt(B_HEIGHT);
 			int posX = rand.nextInt(B_WIDTH) + 400;
 			
 			if(posY > 300) posY -= 100 ;
 		
-			walls.add(new Wall(posX, posY));}
+			if((posX-wallX)> 100 && (posY-wallY)> 100){
+				walls.add(new Wall(posX, posY));
+				wallX = posX;
+				wallY = posY; 
+			}
+		}
 		
 		for (int i = 0; i <walls.size(); i++){
 			Wall w = walls.get(i);
@@ -286,7 +306,7 @@ public class Game extends JPanel implements ActionListener{
 		Random rand = new Random();
 		int spawn = rand.nextInt(1000);
 		
-		if(spawn > 990 && lives.size()==0){
+		if(spawn > 990 && lives.size()==0 && aliens2.size()==0){
 			int posY = rand.nextInt(B_HEIGHT);
 			int posX = rand.nextInt(B_WIDTH) + 400;
 			
@@ -309,7 +329,7 @@ public class Game extends JPanel implements ActionListener{
 		Random rand = new Random();
 		int spawn = rand.nextInt(1000);
 		
-		if(spawn > 990 && aliens2.size()==0){
+		if(spawn > 990 && aliens2.size()==0 && lives.size()==0){
 			int posY = rand.nextInt(B_HEIGHT);
 			int posX = rand.nextInt(B_WIDTH) + 400;
 			
@@ -321,9 +341,19 @@ public class Game extends JPanel implements ActionListener{
 			Alien2 a = aliens2.get(i);
 			if (a.isVisible())
 				a.move();
-			else 
+			else
 				aliens2.remove(i);
 		}
+		
+	}
+	
+	public void updateSpeed(){
+		
+		if(spawned%20==0 && spawned != 0){
+			back.setSpeed((back.getSpeed()+1)); ;
+			Alien.setSpeed((Alien.getSpeed()+1));
+			spawned++; //triche, à modifier
+			}
 		
 	}
 	
@@ -401,6 +431,15 @@ public class Game extends JPanel implements ActionListener{
             	}
             }
         }
+        
+        /*Iterator<Wall> it = walls.iterator();
+        if(it.hasNext()){
+        	Rectangle rW = it.next().getBounds();}
+        while (it.hasNext()){
+        	Rectangle rW2 = it.next().getBounds();
+        	if(rW2.intersects(rW))
+        		it.next().setVisible(false);
+        	}*/
     }
 	
 	private class TAdapter extends KeyAdapter{

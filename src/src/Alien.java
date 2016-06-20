@@ -2,6 +2,8 @@ package src;
 
 public class Alien extends Sprite{
 	
+	private static int speed;
+	
 	public Alien(int x, int y){
 		super(x,y);	
 		initAlien();
@@ -22,7 +24,15 @@ public class Alien extends Sprite{
 		if(x<0)
 			vis = false;
 		
-		x -= 3 ;
+		x -= speed ;
+	}
+
+	public static int getSpeed() {
+		return speed;
+	}
+
+	public static void setSpeed(int speed) {
+		Alien.speed = speed;
 	}
 
 }

@@ -28,7 +28,7 @@ public class Alien2 extends Sprite{
 		}
 		x -= 3 ;
 		
-		int dy = (int)(Math.sin(Math.toRadians(i))*20) /4;
+		int dy = (int)(Math.sin(Math.toRadians(i))*20) /3;
 		y+=dy;
 		i = i + 3;
 	}

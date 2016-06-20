@@ -9,7 +9,7 @@ public class Wall extends Sprite{
 	
 	public void initWall(){
 		
-		loadImage("/wall.png");
+		loadImage("/wall3.png");
 		getImageDimensions();
 		
 	}

@@ -9,6 +9,7 @@ public class Background {
 
 	private int pos_x;
 	private Image image;
+	private int speed;
 	
 	public Background(){
 		
@@ -20,6 +21,8 @@ public class Background {
 		
 		ImageIcon ii = new ImageIcon(getClass().getResource("/fond.png"));
         image = ii.getImage();
+        
+        speed = 1;
 		
 		pos_x = this.getWidth() - 500;
 		
@@ -47,7 +50,15 @@ public class Background {
 		 if(pos_x>image.getWidth(null))
 			 pos_x = 0;
 			
-		 pos_x += 1 ;
+		pos_x += speed ;
 		 
+	 }
+	 
+	 public int getSpeed(){
+		 return speed;
+	 }
+	 
+	 public void setSpeed(int speed){
+		this.speed = speed;
 	 }
 }
