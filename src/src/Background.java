@@ -19,7 +19,7 @@ public class Background {
 			e.printStackTrace();
 		}*/
 		
-		ImageIcon ii = new ImageIcon(getClass().getResource("/fond.png"));
+		ImageIcon ii = new ImageIcon(getClass().getResource("/fond4.png"));
         image = ii.getImage();
         
         speed = 1;

@@ -21,7 +21,7 @@ import javax.swing.Timer;
 public class Game extends JPanel implements ActionListener{
 	
 	private final int ICRAFT_X = 50;
-	private final int ICRAFT_Y = 160;
+	private final int ICRAFT_Y = 20;
 	private final int DELAY = 15;
 	private Timer timer;
 	private Craft craft;
@@ -34,7 +34,7 @@ public class Game extends JPanel implements ActionListener{
 	
 	private boolean ingame;
 	private final int B_WIDTH = 480;
-	private final int B_HEIGHT = 360;
+	private final int B_HEIGHT = 340;
 		
 	private ArrayList<Alien> aliens;
 	private ArrayList<Wall> walls;
@@ -65,6 +65,7 @@ public class Game extends JPanel implements ActionListener{
 		back = new Background();
 		
 		initAliens();
+		Life.setSpeed(5);
 		
 		walls = new ArrayList<>();
 		lives = new ArrayList<>();
@@ -90,10 +91,15 @@ public class Game extends JPanel implements ActionListener{
 			int posY = rand.nextInt(B_HEIGHT);
 			int posX = rand.nextInt(B_WIDTH) + 500;
 			
-			if(posY > 300) posY -= 100 ; 
+			if(posY < 76) posY = 20;
+			else if(posY < 132) posY = 81;
+			else if(posY < 188) posY = 142;
+			else if(posY < 244) posY = 203;
+			else posY = 264;
+			
+			//posY = 20;
 		
 			aliens.add(new Alien(posX, posY));
-			
 		}
 		
 		Alien.setSpeed(3);
@@ -149,7 +155,7 @@ public class Game extends JPanel implements ActionListener{
         
         Font f = new Font("Dialog", Font.BOLD,20);
         g.setFont(f);
-        g.setColor(Color.WHITE);
+        g.setColor(Color.BLACK);
         g.drawString("Aliens left : " + aliens.size(), 5, 20);
         g.drawString("Life left : " + life, 5, 40);
         g.drawString("Spawned : " + spawned, 5, 60);
@@ -186,7 +192,7 @@ public class Game extends JPanel implements ActionListener{
 		if(!ingame){
 			timer.stop();
 			Frame frame = Frame.getFrame();
-			frame.gameOver(score, aliens.size() + aliens2.size(), life);
+			frame.gameOver(score, spawned, life);
 			
 		}
 	}
@@ -254,26 +260,40 @@ public class Game extends JPanel implements ActionListener{
 		Random rand = new Random();
 		int spawn = rand.nextInt(1000);
 		int alienX =0;
-		int alienY =0;
+		//int alienY =0;
+		
+		
 		
 		if(spawn > 980 && aliens.size() < 10){
 			int posY = rand.nextInt(B_HEIGHT);
 			int posX = rand.nextInt(B_WIDTH) + 400;
 			
-			if(posY > 300) posY -= 100 ;
+			//if(posY > 300) posY -= 100 ;
 			
-			if(posX-alienX > 50 && posY-alienY > 50){
+			if(posY < 76) posY = 20;
+			else if(posY < 132) posY = 81;
+			else if(posY < 188) posY = 142;
+			else if(posY < 244) posY = 203;
+			else posY = 264;
+			
+			if(!aliens.isEmpty()){
+				Alien a = aliens.get(0);
+			if(Math.abs(posX-alienX) > a.width){
 				aliens.add(new Alien(posX, posY));
 				alienX = posX;
-				alienY = posY;
+				//alienY = posY;
+				}
 			}
+			else
+				aliens.add(new Alien(posX, posY));
+
 		}
 	}
 	
 	public void updateWalls(){
 		
 		int wallX = 0;
-		int wallY = 0;
+		//int wallY = 0;
 		
 		Random rand = new Random();
 		int spawn = rand.nextInt(1000);
@@ -284,11 +304,20 @@ public class Game extends JPanel implements ActionListener{
 			
 			if(posY > 300) posY -= 100 ;
 		
-			if((posX-wallX)> 100 && (posY-wallY)> 100){
+			
+			
+			if(posY < 76) posY = 20;
+			else if(posY < 132) posY = 81;
+			else if(posY < 188) posY = 142;
+			else if(posY < 244) posY = 203;
+			else posY = 264;
+			
+			if((Math.abs(posX-wallX))> 300){
 				walls.add(new Wall(posX, posY));
 				wallX = posX;
-				wallY = posY; 
+				//wallY = posY; 
 			}
+			
 		}
 		
 		for (int i = 0; i <walls.size(); i++){
@@ -310,7 +339,13 @@ public class Game extends JPanel implements ActionListener{
 			int posY = rand.nextInt(B_HEIGHT);
 			int posX = rand.nextInt(B_WIDTH) + 400;
 			
-			if(posY > 300) posY -= 100 ;
+			//if(posY > 300) posY -= 100 ;
+			
+			if(posY < 76) posY = 20;
+			else if(posY < 132) posY = 81;
+			else if(posY < 188) posY = 142;
+			else if(posY < 244) posY = 203;
+			else posY = 264;
 		
 			lives.add(new Life(posX, posY));}
 		
@@ -333,7 +368,13 @@ public class Game extends JPanel implements ActionListener{
 			int posY = rand.nextInt(B_HEIGHT);
 			int posX = rand.nextInt(B_WIDTH) + 400;
 			
-			if(posY > 300) posY -= 100 ;
+			//if(posY > 300) posY -= 100 ;
+			
+			if(posY < 76) posY = 20;
+			else if(posY < 132) posY = 81;
+			else if(posY < 188) posY = 142;
+			else if(posY < 244) posY = 203;
+			else posY = 264;
 		
 			aliens2.add(new Alien2(posX, posY));}
 		
@@ -352,6 +393,7 @@ public class Game extends JPanel implements ActionListener{
 		if(spawned%20==0 && spawned != 0){
 			back.setSpeed((back.getSpeed()+1)); ;
 			Alien.setSpeed((Alien.getSpeed()+1));
+			Life.setSpeed((Life.getSpeed()+1));
 			spawned++; //triche, à modifier
 			}
 		

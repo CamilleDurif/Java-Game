@@ -10,8 +10,8 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class Menu extends JPanel{
 	
-	private final int B_WIDTH = 400;
-	private final int B_HEIGHT = 400;
+	private final int B_WIDTH = 500;
+	private final int B_HEIGHT = 380;
 	
 	@Override
 	public void paintComponent(Graphics g){

@@ -11,8 +11,8 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class GameOver extends JPanel{
 	
-	private final int B_WIDTH = 400;
-	private final int B_HEIGHT = 400;
+	private final int B_WIDTH = 500;
+	private final int B_HEIGHT = 380;
 	
 	private String result;
 	private boolean win = false;
@@ -28,7 +28,7 @@ public class GameOver extends JPanel{
 			
 		this.result = "Your score : " + score ;
 		
-		if(result==0 && life >= 0)
+		if(result>=100 && life >= 0)
 			win = true;
 		
 		

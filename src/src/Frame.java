@@ -29,9 +29,10 @@ public class Frame extends JFrame implements ActionListener{
 		Frame.frame = this;
 		
 		setTitle("GameTest");
-		setSize(new Dimension(400, 400));
+		setSize(new Dimension(500, 379));
 		setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setResizable(false);
 		
 		
 		ImageIcon img = new ImageIcon(getClass().getResource("/logo.png"));
