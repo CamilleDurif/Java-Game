@@ -71,7 +71,7 @@ public class Game extends JPanel implements ActionListener{
 		lives = new ArrayList<>();
 		aliens2 = new ArrayList<>();
 		aliens2.add(new Alien2(500,20));
-		
+				
 		timer = new Timer(DELAY, this);
 		timer.start();
 		
@@ -191,6 +191,8 @@ public class Game extends JPanel implements ActionListener{
 		
 		if(!ingame){
 			timer.stop();
+			//Sound.stop();
+			back.stop();
 			Frame frame = Frame.getFrame();
 			frame.gameOver(score, spawned, life);
 			
@@ -406,6 +408,10 @@ public class Game extends JPanel implements ActionListener{
 	@SuppressWarnings("unchecked")
 	public void checkCollisions(){
 		
+		if(life < 0){
+			Sound.play("explosion2.wav");
+		}
+		
 
         Rectangle rC = craft.getBounds();
 
@@ -415,6 +421,7 @@ public class Game extends JPanel implements ActionListener{
             if (rC.intersects(rA)) {
             	alien.setVisible(false);
                 life--;
+                Sound.play("explosion.wav");
             }
         }
         
@@ -422,6 +429,7 @@ public class Game extends JPanel implements ActionListener{
         	Rectangle rA2 = alien.getBounds();
         	if(rC.intersects(rA2)){
         		alien.setVisible(false);
+        		Sound.play("explosion.wav");
         		life -= 2;
         	}
         	
@@ -432,6 +440,7 @@ public class Game extends JPanel implements ActionListener{
         	Rectangle rW = wall.getBounds();
         	if(rC.intersects(rW)){
         		craft.setVisible(false);
+        		Sound.play("explosion2.wav");
         		ingame = false;
         	}
         }
@@ -441,6 +450,7 @@ public class Game extends JPanel implements ActionListener{
         	if(rC.intersects(rL)){
         		life++;
         		l.setVisible(false);
+        		Sound.play("heal.wav");
         	}
         }
 
@@ -458,6 +468,7 @@ public class Game extends JPanel implements ActionListener{
                     m.setVisible(false);
                     alien.setVisible(false);
                     score++;
+                    Sound.play("explosion.wav");
                 }
             }
             
@@ -469,19 +480,11 @@ public class Game extends JPanel implements ActionListener{
             		if(alien.count == 0){
             			alien.setVisible(false);
             			score++;
+            			Sound.play("explosion.wav");
             		}
             	}
             }
         }
-        
-        /*Iterator<Wall> it = walls.iterator();
-        if(it.hasNext()){
-        	Rectangle rW = it.next().getBounds();}
-        while (it.hasNext()){
-        	Rectangle rW2 = it.next().getBounds();
-        	if(rW2.intersects(rW))
-        		it.next().setVisible(false);
-        	}*/
     }
 	
 	private class TAdapter extends KeyAdapter{

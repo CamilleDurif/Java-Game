@@ -11,6 +11,8 @@ public class Background {
 	private Image image;
 	private int speed;
 	
+	private Sound sound;
+	
 	public Background(){
 		
 		/*try{
@@ -25,6 +27,9 @@ public class Background {
         speed = 1;
 		
 		pos_x = this.getWidth() - 500;
+		
+		sound = new Sound("road.wav");
+		//Sound.play("road.wav");
 		
 	
 	}
@@ -60,5 +65,11 @@ public class Background {
 	 
 	 public void setSpeed(int speed){
 		this.speed = speed;
+	 }
+	 
+	 public void stop(){
+		 
+		 sound.stop();
+		 
 	 }
 }
