@@ -14,6 +14,7 @@ public class Alien2 extends Sprite{
 		
 		loadImage("/alien5.png");
 		getImageDimensions();
+		loadSoundName("gyarados.wav");
 		
 	}
 	/*

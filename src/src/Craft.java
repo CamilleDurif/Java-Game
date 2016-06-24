@@ -83,7 +83,8 @@ public class Craft extends Sprite {
 		
 		if (missiles.size() < 10){
 			missiles.add(new Missile(x + width, y + height/2));
-			Sound.play("poke_shoot.wav");}
+			//Sound.play("poke_shoot.wav");
+		}
 		
 	}
 

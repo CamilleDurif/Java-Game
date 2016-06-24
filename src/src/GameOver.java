@@ -16,6 +16,7 @@ public class GameOver extends JPanel{
 	
 	private String result;
 	private boolean win = false;
+	
 
 	/*
 	 * this function is called by Frame

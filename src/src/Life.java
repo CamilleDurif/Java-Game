@@ -12,7 +12,7 @@ public class Life extends Sprite{
 	public void initLife(){
 		loadImage("/life.png");
 		getImageDimensions();
-	
+		loadSoundName("heal.wav");
 	}
 	
 	public void move(){

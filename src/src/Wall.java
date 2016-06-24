@@ -11,6 +11,7 @@ public class Wall extends Sprite{
 		
 		loadImage("/wall3.png");
 		getImageDimensions();
+		loadSoundName("explosion.wav");
 		
 	}
 	

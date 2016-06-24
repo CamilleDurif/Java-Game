@@ -15,6 +15,8 @@ public class Sprite {
     //state of life (visible or not)
     protected boolean vis;
     protected Image image;
+    
+    protected String soundName;
 
     public Sprite(int x, int y) {
 
@@ -27,6 +29,10 @@ public class Sprite {
 
         ImageIcon ii = new ImageIcon(getClass().getResource(imageName));
         image = ii.getImage();
+    }
+    
+    protected void loadSoundName(String soundName){
+    	this.soundName = soundName;
     }
     
     protected void getImageDimensions() {
@@ -60,5 +66,13 @@ public class Sprite {
     	
     	return new Rectangle(x, y, width, height);
     	
+    }
+    
+    public String getSoundName(){
+    	return soundName;
+    }
+    
+    public void playSound(){
+    	Sound.play(this.getSoundName());
     }
 }

@@ -14,6 +14,7 @@ public class Alien extends Sprite{
 		loadImage("/alien4.png");
 		getImageDimensions();
 		
+		loadSoundName("magicarpe.wav");		
 	}
 	/*
 	 * increment of the x coordinate of aliens by -3 for going from right to left 

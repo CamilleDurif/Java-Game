@@ -27,6 +27,12 @@ public class Sound {
 		
 	}
 	
+	public void loop(){
+		
+		clip.loop(10);
+		
+	}
+	
 	public static synchronized void play(final String name){
 		
 		new Thread(new Runnable(){
