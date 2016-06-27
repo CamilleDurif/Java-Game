@@ -10,7 +10,7 @@ public class BackgroundSound {
 	
 	public BackgroundSound(){
 		
-		menuSound = "heal.wav";
+		menuSound = "on.wav";
 		gameSound = "road.wav";
 		gameoverSound = "gameover.wav";
 		
@@ -23,13 +23,13 @@ public class BackgroundSound {
 		
 		if(state == "game"){
 			sound = new Sound(gameSound);
+			sound.loop();
 		}
 		else if(state == "gameover"){
 			sound = new Sound(gameoverSound);
 		}
 		else{
 			sound = new Sound(menuSound);
-			sound.loop();
 		}
 	}
 }

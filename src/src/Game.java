@@ -55,7 +55,7 @@ public class Game extends JPanel implements ActionListener{
 		
 		ingame = true;
 		score = 0;
-		life = 300;
+		life = 3;
 		spawned = 0;
 		
 		setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
