@@ -1,9 +1,8 @@
 package src;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,17 +11,21 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class ScoreBoard extends JPanel{
 	
-	//private File fscore;
-	
 	private ArrayList<Score> scorelist;
 	
 	private static final String fscore = "score.dat";
+	
+	private boolean newRecord = false;
+	private int index = 0;
 	
 	ObjectOutputStream oos = null;
 	ObjectInputStream ois = null;
@@ -33,28 +36,65 @@ public class ScoreBoard extends JPanel{
 		
 		scorelist = new ArrayList<Score>();
 		
-		if(!(new File(fscore).exists())){
-			this.addScore("Winner", 100);
+		File scoreFile = new File(fscore);
+		if(!scoreFile.exists()){
+			try{
+				scoreFile.createNewFile();
+				scorelist.add(new Score("winner", 100));
+				scorelist.add(new Score("Looser", 0));
+				updateScoreFile();
+			}catch(IOException e){
+				System.out.print("impossible de créer le fichier");
+			}
 		}
 	}
 	
 	public ArrayList<Score> getScores(){
 		
 		loadScoreFile();
-		sort();
 		return scorelist;
 		
 	}
 	
 	public void sort(){
-		System.out.print("tri des scores");
+		ScoreComparator comparator = new ScoreComparator();
+		Collections.sort(scorelist,comparator);
 	}
 	
 	public void addScore(String playerName, int score){
 		
 		loadScoreFile();
-		scorelist.add(new Score(playerName, score));
-		updateScoreFile();
+		sort();
+		Iterator<Score> i = scorelist.iterator();
+		int j =0;
+			while(i.hasNext()){
+				Score s = i.next();
+				if(score >= s.getScore()){
+					Score newScore = new Score(playerName, score);
+					scorelist.add(newScore);
+					sort();
+					updateScoreFile();
+					newRecord = true;
+					index = getIndex(newScore);
+					if(index>5)
+						newRecord = false;
+					break;
+				}
+			}	
+		
+		afficherScore();
+	}
+	
+	public int getIndex(Score score){
+		
+		int i =0;
+		
+		for(i=0; i<scorelist.size(); i++){
+			if(scorelist.get(i).equals(score))
+				return i;
+		}
+		
+		return 0;
 		
 	}
 	
@@ -101,9 +141,6 @@ public class ScoreBoard extends JPanel{
         		System.out.println("[Laad] IO Error: " + e.getMessage());
         	}
         }
-		
-		afficherScore();
-		
 	}
 	
 
@@ -122,17 +159,56 @@ public class ScoreBoard extends JPanel{
 		
 		GridBagConstraints c = new GridBagConstraints();
 		
-		//System.out.println("avant la boucle");
-		
 		while(i < x && i < 5){
 			score = scores.get(i).toString();
-			//System.out.println(score);
 			JLabel jl = new JLabel(score);
-			//c.fill = GridBagConstraints.HORIZONTAL;
+			if(i == index && i!=0 && newRecord)
+				jl.setForeground(Color.RED);
 	        c.gridx = 1;
-	        c.gridy = i;
+	        c.gridy = i+5;
 			this.add(jl, c);
 			i++;
 		}
+		
+		JLabel js = new JLabel("Best Scores");
+		c.gridx = 1;
+		c.gridy = 1;
+		this.add(js, c);
+		
+		JLabel j = new JLabel(" ");
+		c.gridx = 1;
+		c.gridy = 2;
+		this.add(j, c);
+		
+		if(newRecord){
+			JLabel jr = new JLabel("NEW RECORD");
+			jr.setForeground(Color.BLUE);
+			c.gridx = 1;
+			c.gridy = 3;
+			this.add(jr, c);
+			
+			JLabel j2 = new JLabel(" ");
+			c.gridx = 1;
+			c.gridy = 4;
+			this.add(j2, c);
+			
+			newRecord = false;
+		}
+	}
+	
+	class ScoreComparator implements Comparator<Score>{
+		
+		public int compare(Score s1, Score s2){
+			int score1 = s1.getScore();
+			int score2 = s2.getScore();
+			
+			if(score1>score2)
+				return -1;
+			else if(score2>score1)
+				return 1;
+			else
+				return 0;
+		}
+		
 	}
 }

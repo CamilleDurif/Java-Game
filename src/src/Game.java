@@ -156,7 +156,7 @@ public class Game extends JPanel implements ActionListener{
         Font f = new Font("Dialog", Font.BOLD,20);
         g.setFont(f);
         g.setColor(Color.BLACK);
-        g.drawString("Aliens left : " + aliens.size(), 5, 20);
+        g.drawString("Score : " + score, 5, 20);
         g.drawString("Life left : " + life, 5, 40);
         g.drawString("Spawned : " + spawned, 5, 60);
 	}

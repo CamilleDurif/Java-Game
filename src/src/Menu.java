@@ -1,9 +1,5 @@
 package src;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -15,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
-public class Menu extends JPanel implements ActionListener{
+public class Menu extends JPanel{
 	
 	//private final int B_WIDTH = 500;
 	//private final int B_HEIGHT = 380;
@@ -29,7 +25,7 @@ public class Menu extends JPanel implements ActionListener{
 		GridBagConstraints c = new GridBagConstraints();
 		
 		nameField = new JTextField("default name", 20); // Here 20 gives a hint on the width of the textfield
-        nameField.addActionListener(this);
+        //nameField.addActionListener(this);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 3;
         c.gridy = 1;
@@ -54,9 +50,19 @@ public class Menu extends JPanel implements ActionListener{
         //Image image = ii.getImage();*/
 	}
 	
-	  @Override
+	  /*@Override
 	    public void actionPerformed(ActionEvent e) {
 	        Frame.setPlayerName(nameField.getText());
-	    }
+	        System.out.println("actionevent sur le nom");
+	    }*/
+	
+	public void setPlayerName(){
+		
+		if(Frame.getPlayerName() == "default name")
+			Frame.setPlayerName("Anonyme");
+		else
+			Frame.setPlayerName(nameField.getText());
+		
+	}
 
 }

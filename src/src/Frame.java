@@ -22,6 +22,7 @@ public class Frame extends JFrame implements ActionListener{
 	private CardLayout cl = new CardLayout(); //this layout is used to switch from different JPanel
 	private JPanel content = new JPanel(); //this JPanl will contain the panel for the game of the panel for the game over screen
 	private Game game;
+	private Menu menu;
 	
 	private BackgroundSound bg;
 	
@@ -29,8 +30,6 @@ public class Frame extends JFrame implements ActionListener{
 	
 	private static String playerName;
 
-	//private Sound sound;
-	//private Menu menu;
 	
 	public Frame(){
 		
@@ -46,7 +45,7 @@ public class Frame extends JFrame implements ActionListener{
 		ImageIcon img = new ImageIcon(getClass().getResource("/logo.png"));
 		this.setIconImage(img.getImage());
 		
-		Menu menu = new Menu();
+		menu = new Menu();
 		//Game game = new Game();
 		//ScoreBoard menu = new ScoreBoard();
 		
@@ -97,6 +96,9 @@ public class Frame extends JFrame implements ActionListener{
 	}
 	
 	public void doStart(){
+		
+		menu.setPlayerName();
+		
 		game = new Game();
 		content.add(game, "Game");
 		cl.show(content, "Game");
@@ -118,9 +120,6 @@ public class Frame extends JFrame implements ActionListener{
 	
 	public static String getPlayerName(){
 		
-		if(playerName == null)
-			playerName = "Anonyme";
-		
 		return playerName;
 		
 	}
@@ -136,16 +135,12 @@ public class Frame extends JFrame implements ActionListener{
 		cl.show(content, "GameOver");
 		this.add(bouton, BorderLayout.SOUTH);*/
 		
-		//Score score = new Score(Frame.getPlayerName(), pscore);
-		
 		scoreboard.addScore(Frame.getPlayerName(), pscore);
-		//content.removeAll();
 		content.add(scoreboard, "ScoreBoard");
 		cl.show(content, "ScoreBoard");
 		this.add(bouton, BorderLayout.SOUTH);
 		
 		bg.play("gameover");
-		//sound = new Sound("gameover.wav");
 	}
 
 }
