@@ -24,6 +24,10 @@ public class Frame extends JFrame implements ActionListener{
 	private Game game;
 	
 	private BackgroundSound bg;
+	
+	private ScoreBoard scoreboard;
+	
+	private static String playerName;
 
 	//private Sound sound;
 	//private Menu menu;
@@ -44,6 +48,7 @@ public class Frame extends JFrame implements ActionListener{
 		
 		Menu menu = new Menu();
 		//Game game = new Game();
+		//ScoreBoard menu = new ScoreBoard();
 		
 		bouton = new JButton("Try Again");
 		bouton.addActionListener(this);
@@ -61,6 +66,8 @@ public class Frame extends JFrame implements ActionListener{
 	    
 	    bg = new BackgroundSound();
 	    bg.play("fdf");
+	    
+	    scoreboard = new ScoreBoard();
 	    
 	    //Sound.play("heal.wav");
 	
@@ -103,15 +110,38 @@ public class Frame extends JFrame implements ActionListener{
 		
 	}
 	
+	public static void setPlayerName(String name){
+		
+		playerName = name;
+		
+	}
+	
+	public static String getPlayerName(){
+		
+		if(playerName == null)
+			playerName = "Anonyme";
+		
+		return playerName;
+		
+	}
+	
 	/*
 	 * this function is called by the game panel when the game is finished
 	 * it adds a new gameover panel to the content, which is the one shown by the content
 	 */
-	public void gameOver(int score, int result, int life){
+	public void gameOver(int pscore, int result, int life){
 		
-		GameOver gameover = new GameOver(score, result, life);
+		/*GameOver gameover = new GameOver(score, result, life);
 		content.add(gameover, "GameOver");
 		cl.show(content, "GameOver");
+		this.add(bouton, BorderLayout.SOUTH);*/
+		
+		//Score score = new Score(Frame.getPlayerName(), pscore);
+		
+		scoreboard.addScore(Frame.getPlayerName(), pscore);
+		//content.removeAll();
+		content.add(scoreboard, "ScoreBoard");
+		cl.show(content, "ScoreBoard");
 		this.add(bouton, BorderLayout.SOUTH);
 		
 		bg.play("gameover");

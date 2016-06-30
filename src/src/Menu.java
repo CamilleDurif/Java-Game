@@ -4,49 +4,59 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.Label;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
-public class Menu extends JPanel{
+public class Menu extends JPanel implements ActionListener{
 	
-	private final int B_WIDTH = 500;
-	private final int B_HEIGHT = 380;
+	//private final int B_WIDTH = 500;
+	//private final int B_HEIGHT = 380;
 	
-	/*public void Menu(){
-		
-		ImageIcon ii = new ImageIcon(getClass().getResource("/fond4.png"));
-        //Image image = ii.getImage();
-		
-		JLabel label = new JLabel(ii);
-        
-        this.add(label);
-        
-	}*/
+	private JTextField nameField;
 	
-	@Override
-	public void paintComponent(Graphics g){
+	public Menu(){
 		
-		/*ImageIcon ii = new ImageIcon(getClass().getResource("/fond4.png"));
-        Image image = ii.getImage();
+		super(new GridBagLayout());
+		
+		GridBagConstraints c = new GridBagConstraints();
+		
+		nameField = new JTextField("default name", 20); // Here 20 gives a hint on the width of the textfield
+        nameField.addActionListener(this);
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 3;
+        c.gridy = 1;
+        this.add(nameField, c);
         
-        g.drawImage(image, B_WIDTH/4, B_HEIGHT/4, this);*/
-		
-		String s1 = "Bienvenue";
-		String s2 = "Use UP and DOWN to move";
-		String s3 = "Use SPACE to shoot missiles";
-        Font small = new Font("Helvetica", Font.BOLD, 14);
-        FontMetrics fm = getFontMetrics(small);
+        JLabel nameLabel = new JLabel("Player Name : ");
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 2;
+        c.gridy = 1;
+        this.add(nameLabel, c);
 
-        g.setColor(Color.black);
-        g.setFont(small);
-        g.drawString(s1, (B_WIDTH - fm.stringWidth(s1)) / 2, B_HEIGHT / 2 -40);
-        g.drawString(s2, (B_WIDTH - fm.stringWidth(s2)) / 2, B_HEIGHT / 2 );
-        g.drawString(s3, (B_WIDTH - fm.stringWidth(s3)) / 2, B_HEIGHT / 2  -20);
-		
+        
+       JLabel instructions = new JLabel("Use UP and DOWN to move");
+       c.fill = GridBagConstraints.HORIZONTAL;
+       c.insets = new Insets(10,10,10,10); //marges autour du composant
+       c.gridx = 3; //position colonne
+       c.gridy = 0; //position ligne
+       this.add(instructions, c);
+      
+       
+		/*ImageIcon ii = new ImageIcon(getClass().getResource("/fond4.png"));
+        //Image image = ii.getImage();*/
 	}
+	
+	  @Override
+	    public void actionPerformed(ActionEvent e) {
+	        Frame.setPlayerName(nameField.getText());
+	    }
 
 }
