@@ -6,6 +6,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -23,46 +24,31 @@ public class Menu extends JPanel{
 		super(new GridBagLayout());
 		
 		GridBagConstraints c = new GridBagConstraints();
-		
-		nameField = new JTextField("default name", 20); // Here 20 gives a hint on the width of the textfield
-        //nameField.addActionListener(this);
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 3;
-        c.gridy = 1;
-        this.add(nameField, c);
-        
-        JLabel nameLabel = new JLabel("Player Name : ");
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 2;
-        c.gridy = 1;
-        this.add(nameLabel, c);
-
         
        JLabel instructions = new JLabel("Use UP and DOWN to move");
-       c.fill = GridBagConstraints.HORIZONTAL;
-       c.insets = new Insets(10,10,10,10); //marges autour du composant
-       c.gridx = 3; //position colonne
+       //c.fill = GridBagConstraints.HORIZONTAL;
+       c.insets = new Insets(10,10,10,10); //marges autour du composant. valable pour TOUS les composants
+       //c.gridx = 2; //position colonne
        c.gridy = 0; //position ligne
        this.add(instructions, c);
-      
        
+       JButton startButton = new JButton("New Game");
+       startButton.setName("startButton");
+       c.gridy = 2;
+       this.add(startButton, c);
+       
+       JButton optionButton = new JButton("Options");
+       optionButton.setName("optionsButton");
+       c.gridy = 3;
+       this.add(optionButton, c);
+      
+       Frame frame = Frame.getFrame();
+       startButton.addActionListener(frame);
+       optionButton.addActionListener(frame);
 		/*ImageIcon ii = new ImageIcon(getClass().getResource("/fond4.png"));
         //Image image = ii.getImage();*/
 	}
 	
-	  /*@Override
-	    public void actionPerformed(ActionEvent e) {
-	        Frame.setPlayerName(nameField.getText());
-	        System.out.println("actionevent sur le nom");
-	    }*/
-	
-	public void setPlayerName(){
-		
-		if(Frame.getPlayerName() == "default name")
-			Frame.setPlayerName("Anonyme");
-		else
-			Frame.setPlayerName(nameField.getText());
-		
-	}
+	 
 
 }

@@ -14,14 +14,17 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 
 
 @SuppressWarnings("serial")
 public class Game extends JPanel implements ActionListener{
 	
 	private final int ICRAFT_X = 50;
-	private final int ICRAFT_Y = 20;
+	private final int ICRAFT_Y = 142;
 	private final int DELAY = 15;
 	private Timer timer;
 	private Craft craft;
@@ -43,11 +46,33 @@ public class Game extends JPanel implements ActionListener{
 	
 	public Game(){
 		
+		
 		initBoard();
 		
 	}
 	
 	private void initBoard(){
+		
+		this.addAncestorListener(new AncestorListener() {
+		    @Override
+		    public void ancestorRemoved(AncestorEvent pEvent) {
+		    }
+
+		    @Override
+		    public void ancestorMoved(AncestorEvent pEvent) {
+		    }
+
+		    @Override
+		    public void ancestorAdded(AncestorEvent pEvent) {
+		        // TextField is added to its parent => request focus in Event Dispatch Thread
+		        SwingUtilities.invokeLater(new Runnable() {
+		            @Override
+		            public void run() {
+		                requestFocusInWindow();
+		            }
+		        });
+		    }
+		});
 		
 		addKeyListener(new TAdapter());
 		setFocusable(true);

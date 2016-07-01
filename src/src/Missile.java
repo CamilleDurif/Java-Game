@@ -12,7 +12,7 @@ public class Missile extends Sprite {
     
     private void initMissile() {
         
-        loadImage("/missile2.png");  
+        loadImage("/" + Frame.getTheme() + "_missile2.png");  
         getImageDimensions();
     }
 

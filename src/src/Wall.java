@@ -9,7 +9,7 @@ public class Wall extends Sprite{
 	
 	public void initWall(){
 		
-		loadImage("/wall3.png");
+		loadImage("/" + Frame.getTheme() + "_wall3.png");
 		getImageDimensions();
 		loadSoundName("explosion.wav");
 		

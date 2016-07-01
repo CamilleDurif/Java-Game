@@ -3,16 +3,18 @@ package src;
 public class BackgroundSound {
 	
 	private String menuSound;
-	private String gameSound;
-	private String gameoverSound;
+	//private String gameSound;
+	//private String gameoverSound;
 	
 	private Sound sound;
+	
+	//private String theme;
 	
 	public BackgroundSound(){
 		
 		menuSound = "on.wav";
-		gameSound = "road.wav";
-		gameoverSound = "gameover.wav";
+		//gameSound = Frame.getTheme() + "_road.wav";
+		//gameoverSound = Frame.getTheme() + "_gameover.wav";
 		
 	}
 	
@@ -22,11 +24,11 @@ public class BackgroundSound {
 			sound.stop();
 		
 		if(state == "game"){
-			sound = new Sound(gameSound);
+			sound = new Sound(Frame.getTheme() + "_road.wav");
 			sound.loop();
 		}
 		else if(state == "gameover"){
-			sound = new Sound(gameoverSound);
+			sound = new Sound(Frame.getTheme() + "_gameover.wav");
 		}
 		else{
 			sound = new Sound(menuSound);

@@ -19,7 +19,7 @@ public class Craft extends Sprite {
 	private void initCraft(){
 		
 		missiles = new ArrayList<>();
-		loadImage("/red.png");
+		loadImage("/" + Frame.getTheme() + "_red.png");
 		getImageDimensions();
 		
 	}
@@ -82,7 +82,7 @@ public class Craft extends Sprite {
 	public void fire(){
 		
 		if (missiles.size() < 10){
-			missiles.add(new Missile(x + width, y + height/2));
+			missiles.add(new Missile(x + width, y + height/4));
 			//Sound.play("poke_shoot.wav");
 		}
 		

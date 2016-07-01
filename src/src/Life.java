@@ -10,9 +10,9 @@ public class Life extends Sprite{
 	}
 	
 	public void initLife(){
-		loadImage("/life.png");
+		loadImage("/" + Frame.getTheme() + "_life.png");
 		getImageDimensions();
-		loadSoundName("heal.wav");
+		loadSoundName(Frame.getTheme() + "_heal.wav");
 	}
 	
 	public void move(){

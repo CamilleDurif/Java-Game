@@ -12,7 +12,7 @@ public class Alien2 extends Sprite{
 	
 	private void initAlien2(){
 		
-		loadImage("/alien5.png");
+		loadImage("/" + Frame.getTheme() + "_alien5.png");
 		getImageDimensions();
 		loadSoundName("gyarados.wav");
 		

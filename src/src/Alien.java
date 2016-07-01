@@ -11,7 +11,7 @@ public class Alien extends Sprite{
 	
 	private void initAlien(){
 		
-		loadImage("/alien4.png");
+		loadImage("/" + Frame.getTheme() + "_alien4.png");
 		getImageDimensions();
 		
 		loadSoundName("magicarpe.wav");		

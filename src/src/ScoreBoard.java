@@ -3,6 +3,8 @@ package src;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,17 +17,18 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class ScoreBoard extends JPanel{
+public class ScoreBoard extends JPanel implements ActionListener{
 	
-	private ArrayList<Score> scorelist;
+	private ArrayList<Score> scorelist; //list of different scores
 	
-	private static final String fscore = "score.dat";
+	private static final String fscore = "score.dat"; //the name of the file.dat wich contain the list
 	
-	private boolean newRecord = false;
-	private int index = 0;
+	private boolean newRecord = false; //set to true if a new record is set at the end of a game
+	private int index = 0; //to know where the new score is (for red label)
 	
 	ObjectOutputStream oos = null;
 	ObjectInputStream ois = null;
@@ -180,7 +183,7 @@ public class ScoreBoard extends JPanel{
 		c.gridy = 2;
 		this.add(j, c);
 		
-		if(newRecord){
+		if(newRecord && index < 5){
 			JLabel jr = new JLabel("NEW RECORD");
 			jr.setForeground(Color.BLUE);
 			c.gridx = 1;
@@ -194,6 +197,16 @@ public class ScoreBoard extends JPanel{
 			
 			newRecord = false;
 		}
+		
+		JLabel j3 = new JLabel(" ");
+		c.gridx = 1;
+		c.gridy = 10;
+		this.add(j3, c);
+		
+		JButton tryagainB = new JButton("Try Again ?");
+		tryagainB.addActionListener(this);
+		c.gridy = 11;
+		this.add(tryagainB, c);
 	}
 	
 	class ScoreComparator implements Comparator<Score>{
@@ -209,6 +222,13 @@ public class ScoreBoard extends JPanel{
 			else
 				return 0;
 		}
+		
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e){
+		
+		Frame.getFrame().doTryAgain();
 		
 	}
 }
