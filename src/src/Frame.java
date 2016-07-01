@@ -107,6 +107,7 @@ public class Frame extends JFrame implements ActionListener{
 	
 	private void doSkinChange() {
 		//options.setBackground(Color.white);
+		options.setPlayerName();
 		if(Frame.getTheme() == "pokemon")
 			Frame.setTheme("theme2");
 		else
@@ -132,7 +133,7 @@ public class Frame extends JFrame implements ActionListener{
 			cl.show(content, "Menu");
 		}
 		else{
-			content.removeAll();
+			//content.removeAll();
 			scoreboard = new ScoreBoard();
 			content.add(scoreboard, "ScoreBoard");
 			cl.show(content, "ScoreBoard");

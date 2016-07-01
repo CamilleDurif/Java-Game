@@ -503,7 +503,7 @@ public class Game extends JPanel implements ActionListener{
             		alien.count--; 
             		if(alien.count == 0){
             			alien.setVisible(false);
-            			score++;
+            			score+=2;
             			alien.playSound();
             		}
             	}

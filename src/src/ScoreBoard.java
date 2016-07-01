@@ -191,6 +191,7 @@ public class ScoreBoard extends JPanel implements ActionListener{
 		if(newRecord && index < 5){
 			JLabel jr = new JLabel("NEW RECORD");
 			jr.setForeground(Color.BLUE);
+			c.insets = new Insets(0,0,0,0);
 			c.gridx = 1;
 			c.gridy = 3;
 			this.add(jr, c);
@@ -207,6 +208,8 @@ public class ScoreBoard extends JPanel implements ActionListener{
 		c.gridx = 1;
 		c.gridy = 10;
 		this.add(j3, c);*/
+		
+		c.insets = new Insets(10,10,10,10);
 		
 		JButton tryagainB = new JButton("Try Again ?");
 		tryagainB.setName("tryagainB");
