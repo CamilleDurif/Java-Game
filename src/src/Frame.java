@@ -33,6 +33,8 @@ public class Frame extends JFrame implements ActionListener{
 	private static String playerName;
 	
 	private static String theme = "pokemon";
+	
+	public static boolean previousmenu = true;
 
 	
 	public Frame(){
@@ -88,6 +90,8 @@ public class Frame extends JFrame implements ActionListener{
 			doValidate();
 		else if(((JButton)e.getSource()).getName().equals("skinButton"))
 			doSkinChange();
+		else if(((JButton)e.getSource()).getName().equals("deleteButton"))
+			doDelete();
 			
 	}
 	
@@ -103,19 +107,37 @@ public class Frame extends JFrame implements ActionListener{
 	
 	private void doSkinChange() {
 		//options.setBackground(Color.white);
-		
-		Frame.setTheme("theme2");
+		if(Frame.getTheme() == "pokemon")
+			Frame.setTheme("theme2");
+		else
+			Frame.setTheme("pokemon");
 		options = new Options();
 		//content.removeAll();
 		content.add(options, "Options2");
 		cl.show(content, "Options2");
 	}
 	
+	public void doDelete(){
+		
+		int i = options.showMessage();
+		if(i==1)
+			scoreboard.deleteScores();
+	}
+	
 	public void doValidate(){
 		
 		options.setPlayerName();
-		menu = new Menu();
-		cl.show(content, "Menu");
+		if(previousmenu){
+			menu = new Menu();
+			cl.show(content, "Menu");
+		}
+		else{
+			content.removeAll();
+			scoreboard = new ScoreBoard();
+			content.add(scoreboard, "ScoreBoard");
+			cl.show(content, "ScoreBoard");
+		}
+			
 	}
 	
 	public void doTryAgain(){

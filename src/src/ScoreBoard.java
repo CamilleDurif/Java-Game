@@ -3,6 +3,7 @@ package src;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -50,6 +51,8 @@ public class ScoreBoard extends JPanel implements ActionListener{
 				System.out.print("impossible de créer le fichier");
 			}
 		}
+		
+		afficherScore();
 	}
 	
 	public ArrayList<Score> getScores(){
@@ -162,6 +165,8 @@ public class ScoreBoard extends JPanel implements ActionListener{
 		
 		GridBagConstraints c = new GridBagConstraints();
 		
+		c.insets = new Insets(10,10,10,10);
+		
 		while(i < x && i < 5){
 			score = scores.get(i).toString();
 			JLabel jl = new JLabel(score);
@@ -178,10 +183,10 @@ public class ScoreBoard extends JPanel implements ActionListener{
 		c.gridy = 1;
 		this.add(js, c);
 		
-		JLabel j = new JLabel(" ");
+		/*JLabel j = new JLabel(" ");
 		c.gridx = 1;
 		c.gridy = 2;
-		this.add(j, c);
+		this.add(j, c);*/
 		
 		if(newRecord && index < 5){
 			JLabel jr = new JLabel("NEW RECORD");
@@ -190,24 +195,55 @@ public class ScoreBoard extends JPanel implements ActionListener{
 			c.gridy = 3;
 			this.add(jr, c);
 			
-			JLabel j2 = new JLabel(" ");
+			/*JLabel j2 = new JLabel(" ");
 			c.gridx = 1;
 			c.gridy = 4;
-			this.add(j2, c);
+			this.add(j2, c);*/
 			
 			newRecord = false;
 		}
 		
-		JLabel j3 = new JLabel(" ");
+		/*JLabel j3 = new JLabel(" ");
 		c.gridx = 1;
 		c.gridy = 10;
-		this.add(j3, c);
+		this.add(j3, c);*/
 		
 		JButton tryagainB = new JButton("Try Again ?");
+		tryagainB.setName("tryagainB");
 		tryagainB.addActionListener(this);
 		c.gridy = 11;
 		this.add(tryagainB, c);
+		
+		JButton optionsButton = new JButton("Options");
+		optionsButton.setName("optionsButton");
+		optionsButton.addActionListener(this);
+		c.gridy = 12;
+		this.add(optionsButton, c);
 	}
+	
+
+	public void deleteScores() {
+		
+		scorelist.removeAll(scorelist);
+		scorelist.add(new Score("winner", 100));
+		scorelist.add(new Score("Looser", 0));
+		updateScoreFile();
+		
+	}
+	
+
+	@Override
+	public void actionPerformed(ActionEvent e){
+		
+		if(((JButton)e.getSource()).getName().equals("tryagainB"))
+			Frame.getFrame().doTryAgain();
+		else if(((JButton)e.getSource()).getName().equals("optionsButton")){
+			Frame.getFrame().doOptions();
+			Frame.previousmenu = false;
+		}
+		
+	}
+	
 	
 	class ScoreComparator implements Comparator<Score>{
 		
@@ -225,10 +261,5 @@ public class ScoreBoard extends JPanel implements ActionListener{
 		
 	}
 	
-	@Override
-	public void actionPerformed(ActionEvent e){
-		
-		Frame.getFrame().doTryAgain();
-		
-	}
+
 }

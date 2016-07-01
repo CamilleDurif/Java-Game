@@ -7,6 +7,7 @@ import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -40,15 +41,30 @@ public class Options extends JPanel{
         skinButton.setName("skinButton");
         c.gridy = 3;
         this.add(skinButton, c);
+
+        JButton deleteButton = new JButton("Delete scores");
+        deleteButton.setName("deleteButton");
+        c.gridy = 4;
+        this.add(deleteButton, c);
         
         JButton okButton = new JButton("OK");
         okButton.setName("okButton");
-        c.gridy = 4;
+        c.gridy = 5;
         this.add(okButton, c);
 		
         Frame frame = Frame.getFrame();
         skinButton.addActionListener(frame);
+        deleteButton.addActionListener(frame);
         okButton.addActionListener(frame);
+	}
+	
+	public int showMessage(){
+		JOptionPane jop = new JOptionPane();
+		int option = jop.showConfirmDialog(null, "Are you sure ?", "Delete Scores", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		if(option == JOptionPane.OK_OPTION)
+			return 1;
+		else 
+			return 0;
 	}
 	
 	public void setPlayerName(){
