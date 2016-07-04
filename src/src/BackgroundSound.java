@@ -8,8 +8,6 @@ public class BackgroundSound {
 	
 	private Sound sound;
 	
-	//private String theme;
-	
 	public BackgroundSound(){
 		
 		menuSound = "on.wav";

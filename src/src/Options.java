@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+@SuppressWarnings("serial")
 public class Options extends JPanel{
 	
 	private JTextField nameField;
@@ -59,8 +60,8 @@ public class Options extends JPanel{
 	}
 	
 	public int showMessage(){
-		JOptionPane jop = new JOptionPane();
-		int option = jop.showConfirmDialog(null, "Are you sure ?", "Delete Scores", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		new JOptionPane();
+		int option = JOptionPane.showConfirmDialog(null, "Are you sure ?", "Delete Scores", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if(option == JOptionPane.OK_OPTION)
 			return 1;
 		else 
@@ -78,15 +79,6 @@ public class Options extends JPanel{
 	
 	public String getPlayerName(){
 		return nameField.getText();
-	}
-	
-	
-	/*@Override
-	public void actionPerformed(ActionEvent e){
-		
-		//Frame.getFrame().
-		
-	}*/
-	
+	}	
 
 }

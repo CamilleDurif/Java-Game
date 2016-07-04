@@ -11,15 +11,7 @@ public class Background {
 	private Image image;
 	private int speed;
 	
-	//private Sound sound;
-	
 	public Background(){
-		
-		/*try{
-			image = ImageIO.read(new File("Resources/fond.png"));
-		}catch(IOException e){
-			e.printStackTrace();
-		}*/
 		
 		ImageIcon ii = new ImageIcon(getClass().getResource("/fond4.png"));
         image = ii.getImage();
@@ -28,11 +20,6 @@ public class Background {
 		
 		pos_x = this.getWidth() - 500;
 		
-		//sound = new Sound("road.wav");
-		//sound.loop();
-		//Sound.play("road.wav");
-		
-	
 	}
 	
 	public int getWidth(){
@@ -67,10 +54,4 @@ public class Background {
 	 public void setSpeed(int speed){
 		this.speed = speed;
 	 }
-	 
-	/* public void stop(){
-		 
-		 sound.stop();
-		 
-	 }*/
 }

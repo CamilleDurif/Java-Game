@@ -121,8 +121,6 @@ public class Game extends JPanel implements ActionListener{
 			else if(posY < 188) posY = 142;
 			else if(posY < 244) posY = 203;
 			else posY = 264;
-			
-			//posY = 20;
 		
 			aliens.add(new Alien(posX, posY));
 		}
@@ -216,9 +214,6 @@ public class Game extends JPanel implements ActionListener{
 		
 		if(!ingame){
 			timer.stop();
-			//Sound.stop();
-			//back.stop();
-			//Sound.play("gameover.wav");
 			Frame frame = Frame.getFrame();
 			frame.gameOver(score, spawned, life);
 			
@@ -288,16 +283,13 @@ public class Game extends JPanel implements ActionListener{
 		Random rand = new Random();
 		int spawn = rand.nextInt(1000);
 		int alienX =0;
-		//int alienY =0;
 		
 		
 		
 		if(spawn > 980 && aliens.size() < 10){
 			int posY = rand.nextInt(B_HEIGHT);
 			int posX = rand.nextInt(B_WIDTH) + 400;
-			
-			//if(posY > 300) posY -= 100 ;
-			
+						
 			if(posY < 76) posY = 20;
 			else if(posY < 132) posY = 81;
 			else if(posY < 188) posY = 142;
@@ -309,7 +301,6 @@ public class Game extends JPanel implements ActionListener{
 			if(Math.abs(posX-alienX) > a.width){
 				aliens.add(new Alien(posX, posY));
 				alienX = posX;
-				//alienY = posY;
 				}
 			}
 			else
@@ -321,7 +312,6 @@ public class Game extends JPanel implements ActionListener{
 	public void updateWalls(){
 		
 		int wallX = 0;
-		//int wallY = 0;
 		
 		Random rand = new Random();
 		int spawn = rand.nextInt(1000);
@@ -343,7 +333,6 @@ public class Game extends JPanel implements ActionListener{
 			if((Math.abs(posX-wallX))> 300){
 				walls.add(new Wall(posX, posY));
 				wallX = posX;
-				//wallY = posY; 
 			}
 			
 		}
@@ -366,8 +355,6 @@ public class Game extends JPanel implements ActionListener{
 		if(spawn > 990 && lives.size()==0 && aliens2.size()==0){
 			int posY = rand.nextInt(B_HEIGHT);
 			int posX = rand.nextInt(B_WIDTH) + 400;
-			
-			//if(posY > 300) posY -= 100 ;
 			
 			if(posY < 76) posY = 20;
 			else if(posY < 132) posY = 81;

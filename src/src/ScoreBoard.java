@@ -22,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class ScoreBoard extends JPanel implements ActionListener{
 	
 	private ArrayList<Score> scorelist; //list of different scores
@@ -72,7 +73,6 @@ public class ScoreBoard extends JPanel implements ActionListener{
 		loadScoreFile();
 		sort();
 		Iterator<Score> i = scorelist.iterator();
-		int j =0;
 			while(i.hasNext()){
 				Score s = i.next();
 				if(score >= s.getScore()){
@@ -104,6 +104,7 @@ public class ScoreBoard extends JPanel implements ActionListener{
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void loadScoreFile(){
 		
 		try{

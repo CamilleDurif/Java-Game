@@ -1,8 +1,6 @@
 package src;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,11 +15,8 @@ public class Frame extends JFrame implements ActionListener{
 	
 	public static Frame frame;
 	
-	//private JButton bouton;
-	//private JButton boutonStart;
-	
 	private CardLayout cl = new CardLayout(); //this layout is used to switch from different JPanel
-	private JPanel content = new JPanel(); //this JPanl will contain the panel for the game of the panel for the game over screen
+	private JPanel content = new JPanel(); //this JPanel will contain the panel for the game of the panel for the game over screen
 	private Game game;
 	private Menu menu;
 	
@@ -52,26 +47,14 @@ public class Frame extends JFrame implements ActionListener{
 		this.setIconImage(img.getImage());
 		
 		menu = new Menu();
-		//Game game = new Game();
-		//ScoreBoard menu = new ScoreBoard();
-				
 		content.setLayout(cl);
-		//content.add(game, "Game");
 		content.add(menu, "Menu");
-	    
 	    this.getContentPane().add(content);
-	    //this.add(boutonStart, BorderLayout.SOUTH);
-	    //cl.show(content, "Menu");
 	    
 	    bg = new BackgroundSound();
 	    bg.play("fdf");
 	    
 	    scoreboard = new ScoreBoard();
-	    
-	    
-	    
-	    
-	    //Sound.play("heal.wav");
 	
 	}
 	
@@ -97,25 +80,24 @@ public class Frame extends JFrame implements ActionListener{
 	
 	public void doOptions(){
 		
-		//menu.setPlayerName();
 		options = new Options();
-		//options.setBackground(Color.BLACK);
 		content.add(options, "Options");
 		cl.show(content, "Options");
 		
 	}
 	
 	private void doSkinChange() {
-		//options.setBackground(Color.white);
+		
 		options.setPlayerName();
+		
 		if(Frame.getTheme() == "pokemon")
 			Frame.setTheme("theme2");
 		else
 			Frame.setTheme("pokemon");
+		
 		options = new Options();
-		//content.removeAll();
-		content.add(options, "Options2");
-		cl.show(content, "Options2");
+		content.add(options, "Options");
+		cl.show(content, "Options");
 	}
 	
 	public void doDelete(){
@@ -133,7 +115,6 @@ public class Frame extends JFrame implements ActionListener{
 			cl.show(content, "Menu");
 		}
 		else{
-			//content.removeAll();
 			scoreboard = new ScoreBoard();
 			content.add(scoreboard, "ScoreBoard");
 			cl.show(content, "ScoreBoard");
@@ -146,23 +127,15 @@ public class Frame extends JFrame implements ActionListener{
 		game = new Game();
 		content.add(game, "Game");
 		cl.show(content, "Game");
-		//this.remove(bouton);
 		bg.play("game");
-		//game.requestFocus();
 	}
 	
 	public void doStart(){
-		
-		//menu.setPlayerName();
-	
-		//Frame.setPlayerName(options.getPlayerName());
-		//content.removeAll();
 		
 		game = new Game();
 		content.add(game, "Game");
 		content.remove(menu);
 		cl.show(content, "Game");
-		//this.remove(boutonStart);
 		bg.play("game");
 	}
 	
@@ -201,7 +174,6 @@ public class Frame extends JFrame implements ActionListener{
 		scoreboard.addScore(Frame.getPlayerName(), pscore);
 		content.add(scoreboard, "ScoreBoard");
 		cl.show(content, "ScoreBoard");
-		//this.add(bouton, BorderLayout.SOUTH);
 		
 		bg.play("gameover");
 	}
