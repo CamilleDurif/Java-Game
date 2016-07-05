@@ -2,7 +2,7 @@ package src;
 
 public class Alien2 extends Sprite{
 	
-	double i = 0;
+	private double i = 0;
 	int count = 2;
 	
 	public Alien2(int x, int y){
@@ -27,6 +27,7 @@ public class Alien2 extends Sprite{
 			vis = false;
 			i = 0;
 		}
+		
 		x -= 3 ;
 		
 		int dy = (int)(Math.sin(Math.toRadians(i))*20) /3;

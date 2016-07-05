@@ -28,8 +28,13 @@ public class BackgroundSound {
 		else if(state == "gameover"){
 			sound = new Sound(Frame.getTheme() + "_gameover.wav");
 		}
+		else if(state == "boss"){
+			sound = new Sound(Frame.getTheme() + "_boss.wav");
+		}
 		else{
 			sound = new Sound(menuSound);
 		}
 	}
+	
+		
 }

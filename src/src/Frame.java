@@ -185,5 +185,10 @@ public class Frame extends JFrame implements ActionListener{
 	public static void setTheme(String theme) {
 		Frame.theme = theme;
 	}
+	
+	public void playBossTheme(){
+	
+			bg.play("boss");
 
+	}
 }
