@@ -1,10 +1,13 @@
 package src;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,17 +23,18 @@ public class Options extends JPanel{
 		
 		super(new GridBagLayout());
 		
-		this.setBackground(Color.black);
+		//this.setBackground(Color.black);
+		//this.setBackground(new Color(0,0,0,20));
 		
-		if(Frame.getTheme() == "theme2")
-			this.setBackground(Color.white);
+		/*if(Frame.getTheme() == "theme2")
+			this.setBackground(Color.white);*/
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.insets = new Insets(10,10,10,10);
 		
 		String playerName = Frame.getPlayerName();
 		
-		JLabel nameLabel = new JLabel("Change Name : ");
+		JLabel nameLabel = new JLabel("Set Player Name");
         c.gridy = 1;
         this.add(nameLabel, c);
 		
@@ -80,5 +84,20 @@ public class Options extends JPanel{
 	public String getPlayerName(){
 		return nameField.getText();
 	}	
+	
+	@Override
+	protected void paintComponent(Graphics g){
+		
+		super.paintComponent(g);
+		ImageIcon ii = new ImageIcon(getClass().getResource("/" + Frame.getTheme() + "_back.png"));
+        Image image = ii.getImage();
+		g.drawImage(image, 0, 0, null);
+		
+		
+		g.drawRect(0, 0, 500, 500);
+		g.setColor(new Color(255,255,255,200));
+		g.fillRect(0, 0, 500, 500);
+		
+	}
 
 }

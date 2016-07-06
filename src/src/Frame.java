@@ -55,6 +55,9 @@ public class Frame extends JFrame implements ActionListener{
 	    bg.play("fdf");
 	    
 	    scoreboard = new ScoreBoard();
+	    
+	    options = new Options();
+		content.add(options, "Options");
 	
 	}
 	
@@ -80,8 +83,8 @@ public class Frame extends JFrame implements ActionListener{
 	
 	public void doOptions(){
 		
-		options = new Options();
-		content.add(options, "Options");
+		/*options = new Options();
+		content.add(options, "Options");*/
 		cl.show(content, "Options");
 		
 	}
@@ -111,7 +114,7 @@ public class Frame extends JFrame implements ActionListener{
 		
 		options.setPlayerName();
 		if(previousmenu){
-			menu = new Menu();
+			//menu = new Menu();
 			cl.show(content, "Menu");
 		}
 		else{
@@ -123,7 +126,7 @@ public class Frame extends JFrame implements ActionListener{
 	}
 	
 	public void doTryAgain(){
-		content.removeAll();
+		//content.removeAll();
 		game = new Game();
 		content.add(game, "Game");
 		cl.show(content, "Game");
@@ -134,7 +137,7 @@ public class Frame extends JFrame implements ActionListener{
 		
 		game = new Game();
 		content.add(game, "Game");
-		content.remove(menu);
+		//content.remove(menu);
 		cl.show(content, "Game");
 		bg.play("game");
 	}
@@ -190,5 +193,9 @@ public class Frame extends JFrame implements ActionListener{
 	
 			bg.play("boss");
 
+	}
+	
+	public void playTheme(){
+		bg.play("game");
 	}
 }

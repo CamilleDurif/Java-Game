@@ -221,7 +221,7 @@ public class Game extends JPanel implements ActionListener{
 	        updateWalls();
 	        updateLives();
 	        updateBonus();
-	        if(craft.getShoot())
+	        if(craft.getShoot() > 0)
 	        	updateAliens2();
         }
         
@@ -326,6 +326,8 @@ public class Game extends JPanel implements ActionListener{
     		//ingame = false;
     		inboss = false;
     		initAliens();
+    		
+    		Frame.getFrame().playTheme();
 		}
 			
 	}
@@ -339,7 +341,7 @@ public class Game extends JPanel implements ActionListener{
 	private void updateAliens(){
 		
 		//if(aliens.isEmpty()){
-		if(craft.getShoot() && score < 20){
+		if(craft.getShoot()>0 && score < 20 && spawned > 50){
 			//ingame = false;
 			inboss = true;
 			initBoss();
@@ -545,6 +547,7 @@ public class Game extends JPanel implements ActionListener{
             if (rC.intersects(rA)) {
             	alien.setVisible(false);
                 life--;
+                craft.downShoot();
                 alien.playSound();
             }
         }
@@ -555,6 +558,7 @@ public class Game extends JPanel implements ActionListener{
         		alien.setVisible(false);
         		alien.playSound();
         		life -= 2;
+        		craft.downShoot();
         	}
         	
         	
@@ -582,7 +586,7 @@ public class Game extends JPanel implements ActionListener{
         	Rectangle rB = b.getBounds();
         	if(rC.intersects(rB)){
         		b.setVisible(false);
-        		craft.setShoot();
+        		craft.upShoot();
         	}
         }
        
@@ -623,6 +627,7 @@ public class Game extends JPanel implements ActionListener{
 	            if(rC.intersects(rMB)){
 	            	n.setVisible(false);
 	            	life--;
+	            	craft.downShoot();
 	            }
             }
 	    }

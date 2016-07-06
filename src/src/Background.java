@@ -13,7 +13,8 @@ public class Background {
 	
 	public Background(){
 		
-		ImageIcon ii = new ImageIcon(getClass().getResource("/fond4.png"));
+		ImageIcon ii = new ImageIcon(getClass().getResource("/fondtest.png"));
+		//ImageIcon ii = new ImageIcon(getClass().getResource("/" + Frame.getTheme() + "_back.png"));
         image = ii.getImage();
         
         speed = 1;

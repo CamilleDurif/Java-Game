@@ -10,7 +10,8 @@ public class Craft extends Sprite {
 	private ArrayList<Missile> missiles; //list of visible missiles
 	
 	private boolean pressed = false;
-	private boolean canshoot = false;
+
+	private int missilestate;
 	
 	public Craft(int x, int y){
 		super(x,y);
@@ -22,6 +23,8 @@ public class Craft extends Sprite {
 		missiles = new ArrayList<>();
 		loadImage("/" + Frame.getTheme() + "_red.png");
 		getImageDimensions();
+		
+		missilestate = 0;
 		
 	}
 	/*
@@ -82,19 +85,60 @@ public class Craft extends Sprite {
 	 */
 	public void fire(){
 		
-		if (missiles.size() < 10 && canshoot){
-			missiles.add(new Missile(x + width, y + height/4));
-			//Sound.play("poke_shoot.wav");
+		switch(missilestate)
+		{
+			case 0:
+				break;
+				
+			case 1:
+				if(missiles.size() < 5)
+					missiles.add(new Missile(x + width, y));
+				break;
+				
+			case 2:
+				missiles.add(new Missile(x + width, y));
+				break;
+			
+			case 3:
+				if(y<264)
+					missiles.add(new Missile(x + width, y + 64));
+				missiles.add(new Missile(x + width, y));
+				break;
+				
+			case 4:
+				if(y<264)
+					missiles.add(new Missile(x + width, y + 64));
+				missiles.add(new Missile(x + width, y));
+				missiles.add(new Missile(x + width, y - 64));
+				break;
+				
+			case 5:
+				missiles.add(new Missile(x + width, y - 128));
+				missiles.add(new Missile(x + width, y - 64));
+				missiles.add(new Missile(x + width, y));
+				missiles.add(new Missile(x + width, y + 64));
+				missiles.add(new Missile(x + width, y + 128));
+				
 		}
+			
+		
+			//Sound.play("poke_shoot.wav");
+		
 		
 	}
 	
-	public void setShoot(){
-		this.canshoot = true;
+	public void upShoot(){
+		this.missilestate++;
 	}
 	
-	public boolean getShoot(){
-		return this.canshoot;
+	public void downShoot(){
+		this.missilestate--;
+		if(this.missilestate < 0)
+			missilestate = 0;
+	}
+	
+	public int getShoot(){
+		return this.missilestate;
 	}
 
 }   

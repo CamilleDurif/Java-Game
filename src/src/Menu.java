@@ -1,9 +1,13 @@
 package src;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -41,8 +45,23 @@ public class Menu extends JPanel{
        optionButton.addActionListener(frame);
 		/*ImageIcon ii = new ImageIcon(getClass().getResource("/fond4.png"));
         //Image image = ii.getImage();*/
+       
+       this.setBackground(new Color(0,0,0,20));
 	}
 	
-	 
+	@Override
+	protected void paintComponent(Graphics g){
+		
+		super.paintComponent(g);
+		ImageIcon ii = new ImageIcon(getClass().getResource("/" + Frame.getTheme() + "_back.png"));
+        Image image = ii.getImage();
+		g.drawImage(image, 0, 0, null);
+		
+		
+		g.drawRect(0, 0, 500, 500);
+		g.setColor(new Color(255,255,255,200));
+		g.fillRect(0, 0, 500, 500);
+		
+	}
 
 }

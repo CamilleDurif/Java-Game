@@ -1,8 +1,10 @@
 package src;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +20,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -262,6 +265,21 @@ public class ScoreBoard extends JPanel implements ActionListener{
 			else
 				return 0;
 		}
+		
+	}
+	
+	@Override
+	protected void paintComponent(Graphics g){
+		
+		super.paintComponent(g);
+		ImageIcon ii = new ImageIcon(getClass().getResource("/" + Frame.getTheme() + "_back.png"));
+        Image image = ii.getImage();
+		g.drawImage(image, 0, 0, null);
+		
+		
+		g.drawRect(0, 0, 500, 500);
+		g.setColor(new Color(255,255,255,200));
+		g.fillRect(0, 0, 500, 500);
 		
 	}
 	
