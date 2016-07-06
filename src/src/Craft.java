@@ -10,6 +10,7 @@ public class Craft extends Sprite {
 	private ArrayList<Missile> missiles; //list of visible missiles
 	
 	private boolean pressed = false;
+	private boolean canshoot = false;
 	
 	public Craft(int x, int y){
 		super(x,y);
@@ -81,11 +82,19 @@ public class Craft extends Sprite {
 	 */
 	public void fire(){
 		
-		if (missiles.size() < 10){
+		if (missiles.size() < 10 && canshoot){
 			missiles.add(new Missile(x + width, y + height/4));
 			//Sound.play("poke_shoot.wav");
 		}
 		
+	}
+	
+	public void setShoot(){
+		this.canshoot = true;
+	}
+	
+	public boolean getShoot(){
+		return this.canshoot;
 	}
 
 }   

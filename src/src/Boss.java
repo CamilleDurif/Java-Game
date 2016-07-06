@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Boss extends Sprite{
 	
-	private int life = 50;
+	private int life = 20;
 	private ArrayList<BossMissile> missiles;
 	
 	private boolean shooted = false;
@@ -45,7 +45,7 @@ public class Boss extends Sprite{
 			else if(posY < 132 && (y == 20 || y == 142)) y = 81;
 			else if(posY < 188 && (y == 81 || y == 203)) y = 142;
 			else if(posY < 244 && (y == 142 || y == 264)) y = 203;
-			else if(posY > 300 && y == 203) y = 264;
+			else if(posY < 300 && y == 203) y = 264;
 			shooted = false;
 		
 		}

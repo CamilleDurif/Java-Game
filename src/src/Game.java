@@ -45,6 +45,7 @@ public class Game extends JPanel implements ActionListener{
 	private ArrayList<Wall> walls;
 	private ArrayList<Life> lives;
 	private ArrayList<Alien2> aliens2;
+	private ArrayList<Bonus> bonus;
 	
 	public Game(){
 		
@@ -94,11 +95,13 @@ public class Game extends JPanel implements ActionListener{
 		
 		initAliens();
 		Life.setSpeed(5);
+		Bonus.setSpeed(5);
 		
 		walls = new ArrayList<>();
 		lives = new ArrayList<>();
 		aliens2 = new ArrayList<>();
-		aliens2.add(new Alien2(500,20));
+		aliens2 = new ArrayList<>();
+		bonus = new ArrayList<>();
 				
 		timer = new Timer(DELAY, this);
 		timer.start();
@@ -185,6 +188,11 @@ public class Game extends JPanel implements ActionListener{
         		g2d.drawImage(l.getImage(), l.getX(), l.getY(), this);
         }
         
+        for (Bonus b : bonus){
+        	if(b.isVisible())
+        		g2d.drawImage(b.getImage(), b.getX(), b.getY(), this);
+        }
+        
         for (Alien2 a : aliens2){
         	if(a.isVisible())
         		g.drawImage(a.getImage(), a.getX(), a.getY(), this);
@@ -212,7 +220,9 @@ public class Game extends JPanel implements ActionListener{
 	        updateAliens();
 	        updateWalls();
 	        updateLives();
-	        updateAliens2();
+	        updateBonus();
+	        if(craft.getShoot())
+	        	updateAliens2();
         }
         
         if(inboss)
@@ -313,7 +323,9 @@ public class Game extends JPanel implements ActionListener{
 			boss.vis = false;
     		score += 20;
     		boss.setLife(-1);
-    		ingame = false;
+    		//ingame = false;
+    		inboss = false;
+    		initAliens();
 		}
 			
 	}
@@ -327,7 +339,7 @@ public class Game extends JPanel implements ActionListener{
 	private void updateAliens(){
 		
 		//if(aliens.isEmpty()){
-		if(spawned >= 10){
+		if(craft.getShoot() && score < 20){
 			//ingame = false;
 			inboss = true;
 			initBoss();
@@ -417,7 +429,7 @@ public class Game extends JPanel implements ActionListener{
 		Random rand = new Random();
 		int spawn = rand.nextInt(1000);
 		
-		if(spawn > 990 && lives.size()==0 && aliens2.size()==0){
+		if(spawn > 990 && lives.size() == 0 && aliens2.size() == 0){
 			int posY = rand.nextInt(B_HEIGHT);
 			int posX = rand.nextInt(B_WIDTH) + 400;
 			
@@ -435,6 +447,42 @@ public class Game extends JPanel implements ActionListener{
 				l.move();
 			else 
 				lives.remove(i);
+		}
+		
+	}
+	
+	public void updateBonus(){
+		
+		Random rand = new Random();
+		int spawn = rand.nextInt(1000);
+		
+		if(spawn > 995 && bonus.size() == 0){
+			int posY = rand.nextInt(B_HEIGHT);
+		
+			if(posY < 76) posY = 20;
+			else if(posY < 132) posY = 81;
+			else if(posY < 188) posY = 142;
+			else if(posY < 244) posY = 203;
+			else posY = 264;
+			
+			
+			Random rand2 = new Random();
+			int bonustype = rand2.nextInt(2);
+			if (bonustype == 1)
+				bonus.add(new Bonus(B_WIDTH, posY, 1));
+			else 
+				bonus.add(new Bonus(B_WIDTH, posY, 2));
+				
+			
+			
+		}
+		
+		for(int i = 0; i < bonus.size(); i++){
+			Bonus b = bonus.get(i);
+			if(b.isVisible())
+				b.move();
+			else
+				bonus.remove(i);
 		}
 		
 	}
@@ -529,6 +577,14 @@ public class Game extends JPanel implements ActionListener{
         		l.playSound();
         	}
         }
+        
+        for(Bonus b : bonus){
+        	Rectangle rB = b.getBounds();
+        	if(rC.intersects(rB)){
+        		b.setVisible(false);
+        		craft.setShoot();
+        	}
+        }
        
 	    if(inboss){
 	        Rectangle rB = boss.getBounds();
@@ -601,22 +657,7 @@ public class Game extends JPanel implements ActionListener{
             			alien.playSound();
             		}
             	}
-            }
-            
-            /*ArrayList<Missile> mb = craft.getMissiles();
-            
-            for(Missile n : mb){
-            	Rectangle rMB = n.getBounds();
-            	if(rM.intersects(rMB)){
-            		m.setVisible(false);
-            		n.setVisible(false);
-            	}
-            	if(rC.intersects(rMB)){
-            		life--;
-            		n.setVisible(false);
-            	}
-            }
-            */	
+            }	
         }
     }
 	
