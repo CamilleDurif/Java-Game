@@ -12,7 +12,15 @@ public class Missile extends Sprite {
     
     private void initMissile() {
         
-        loadImage("/" + Frame.getTheme() + "_missile2.png");  
+    	//loadImage("/" + Frame.getTheme() + "_missile2.png");  
+    	// -----------------------------------------------------------------------------------------------
+        if(Craft.getCraft().getShoot() == 20)
+        	loadImage("/" + Frame.getTheme() + "_bossmissile.png");
+        else
+        	loadImage("/" + Frame.getTheme() + "_missile2.png");
+        
+        //System.out.println("getShoot() " + Craft.getCraft().getShoot());
+        // -----------------------------------------------------------------------------------------------
         getImageDimensions();
     }
 

@@ -6,10 +6,14 @@ import java.util.ArrayList;
 
 public class Craft extends Sprite {
 	
+	private static Craft craft;
+	
 	private int dy;
 	private ArrayList<Missile> missiles; //list of visible missiles
 	
 	private boolean pressed = false;
+	
+	private boolean immune = false;
 
 	private int missilestate;
 	
@@ -25,6 +29,8 @@ public class Craft extends Sprite {
 		getImageDimensions();
 		
 		missilestate = 0;
+		
+		Craft.craft = this;
 		
 	}
 	/*
@@ -118,6 +124,11 @@ public class Craft extends Sprite {
 				missiles.add(new Missile(x + width, y));
 				missiles.add(new Missile(x + width, y + 64));
 				missiles.add(new Missile(x + width, y + 128));
+				break;
+				
+			case 20:
+				missiles.add(new Missile(x + width, y));
+				break;
 				
 		}
 			
@@ -139,6 +150,22 @@ public class Craft extends Sprite {
 	
 	public int getShoot(){
 		return this.missilestate;
+	}
+	
+	public void setShoot(int upgrade){
+		this.missilestate = upgrade;
+	}
+	
+	public static Craft getCraft(){
+		return Craft.craft;
+	}
+	
+	public boolean isImmune(){
+		return immune;
+	}
+	
+	public void setImmune(boolean immune){
+		this.immune = immune;
 	}
 
 }   

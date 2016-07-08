@@ -4,6 +4,8 @@ public class Bonus extends Sprite{
 	
 	private static int speed;
 	
+	private int type;
+	
 	public Bonus(int x, int y, int i){
 		
 		super(x,y);
@@ -23,12 +25,17 @@ public class Bonus extends Sprite{
 		case 2:
 			imagename = "/" + Frame.getTheme() + "_bonus2.png";
 			break;
+		case 3:
+			imagename = "/" + Frame.getTheme() + "_bonus3.png";
+			break;
 		default:
 			System.out.print("Erreur bonus non trouvé");
 		}
 		
 		loadImage(imagename);
 		getImageDimensions();
+		
+		type = bonustype;
 		
 	}
 	
@@ -47,5 +54,9 @@ public class Bonus extends Sprite{
 
 	public static void setSpeed(int speed) {
 		Bonus.speed = speed;
+	}
+	
+	public int getBonusType(){
+		return this.type;
 	}
 }

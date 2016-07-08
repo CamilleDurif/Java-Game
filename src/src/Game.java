@@ -306,6 +306,7 @@ public class Game extends JPanel implements ActionListener{
 		aliens2.removeAll(aliens2);
 		lives.removeAll(lives);
 		walls.removeAll(walls);
+		bonus.removeAll(bonus);
 		
 		boss = new Boss(450,142);
 		
@@ -469,11 +470,13 @@ public class Game extends JPanel implements ActionListener{
 			
 			
 			Random rand2 = new Random();
-			int bonustype = rand2.nextInt(2);
+			int bonustype = rand2.nextInt(3);
 			if (bonustype == 1)
 				bonus.add(new Bonus(B_WIDTH, posY, 1));
-			else 
+			else if(bonustype == 2)
 				bonus.add(new Bonus(B_WIDTH, posY, 2));
+			else
+				bonus.add(new Bonus(B_WIDTH, posY, 3));
 				
 			
 			
@@ -546,8 +549,21 @@ public class Game extends JPanel implements ActionListener{
 
             if (rC.intersects(rA)) {
             	alien.setVisible(false);
-                life--;
-                craft.downShoot();
+            	// -----------------------------------------------------------------------------------------------
+            	if(craft.isImmune())
+            		craft.setImmune(false);
+            	else{
+            		life--;
+            		craft.downShoot();
+            		if(Craft.getCraft().getShoot() > 15)
+                    	craft.setShoot(2);
+            	}
+            	// -----------------------------------------------------------------------------------------------
+                //craft.downShoot();
+            	// -----------------------------------------------------------------------------------------------
+                //if(Craft.getCraft().getShoot() == 19)
+                //	craft.setShoot(2);
+            	// -----------------------------------------------------------------------------------------------
                 alien.playSound();
             }
         }
@@ -557,22 +573,36 @@ public class Game extends JPanel implements ActionListener{
         	if(rC.intersects(rA2)){
         		alien.setVisible(false);
         		alien.playSound();
-        		life -= 2;
-        		craft.downShoot();
-        	}
-        	
+        		// -----------------------------------------------------------------------------------------------
+        		if(craft.isImmune())
+        			craft.setImmune(false);
+        		else{
+        			life -= 2;
+        			craft.downShoot();
+        			if(Craft.getCraft().getShoot() > 15)
+                    	craft.setShoot(2);
+        		}
+        		// -----------------------------------------------------------------------------------------------
+        		//craft.downShoot();
+        	}  // -----------------------------------------------------------------------------------------------
         	
         }
         
         for(Wall wall : walls){
         	Rectangle rW = wall.getBounds();
         	if(rC.intersects(rW)){
-        		craft.setVisible(false);
-        		wall.playSound();
-        		ingame = false;
+        		if(craft.isImmune()){
+        			craft.setImmune(false);
+        			wall.setVisible(false);
+        		}
+        		else{
+        			craft.setVisible(false);
+        			wall.playSound();
+        			ingame = false;
+        		}
+        		// -----------------------------------------------------------------------------------------------
         	}
         }
-        
         for(Life l : lives){
         	Rectangle rL = l.getBounds();
         	if(rC.intersects(rL)){
@@ -586,7 +616,16 @@ public class Game extends JPanel implements ActionListener{
         	Rectangle rB = b.getBounds();
         	if(rC.intersects(rB)){
         		b.setVisible(false);
-        		craft.upShoot();
+        		// -----------------------------------------------------------------------------------------------
+        		if(b.getBonusType() == 2)
+        			craft.setShoot(20);
+        		else if(b.getBonusType() == 1){
+        			craft.upShoot();
+        			if(craft.getShoot() == 21)
+        				craft.setShoot(3);}
+        		else
+        			craft.setImmune(true);
+        		// -----------------------------------------------------------------------------------------------
         	}
         }
        
@@ -644,17 +683,23 @@ public class Game extends JPanel implements ActionListener{
                 Rectangle rA = alien.getBounds();
 
                 if (rM.intersects(rA)) {
-                    m.setVisible(false);
+                    //m.setVisible(false);
                     alien.setVisible(false);
                     score++;
                     alien.playSound();
+                    if(craft.getShoot() != 20 ){
+                		m.setVisible(false);
+                	}
                 }
             }
             
             for(Alien2 alien : aliens2){
             	Rectangle rA2 = alien.getBounds();
             	if(rM.intersects(rA2)){
-            		m.setVisible(false);
+            		//m.setVisible(false);
+            		if(craft.getShoot() != 20 ){
+                		m.setVisible(false);
+                	}
             		alien.count--; 
             		if(alien.count == 0){
             			alien.setVisible(false);

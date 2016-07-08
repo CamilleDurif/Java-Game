@@ -25,6 +25,8 @@ public class Frame extends JFrame implements ActionListener{
 	private ScoreBoard scoreboard;
 	private Options options;
 	
+	private Rules rules;
+	
 	private static String playerName;
 	
 	private static String theme = "pokemon";
@@ -78,6 +80,10 @@ public class Frame extends JFrame implements ActionListener{
 			doSkinChange();
 		else if(((JButton)e.getSource()).getName().equals("deleteButton"))
 			doDelete();
+		else if(((JButton)e.getSource()).getName().equals("rulesButton"))
+			doRules();
+		else if(((JButton)e.getSource()).getName().equals("exitButton"))
+			doExitRules();
 			
 	}
 	
@@ -86,6 +92,20 @@ public class Frame extends JFrame implements ActionListener{
 		/*options = new Options();
 		content.add(options, "Options");*/
 		cl.show(content, "Options");
+		
+	}
+	
+	public void doRules(){
+		
+		rules = new Rules();
+		content.add(rules,"Rules");
+		cl.show(content, "Rules");
+		
+	}
+	
+	public void doExitRules(){
+		
+		cl.show(content,"Menu");
 		
 	}
 	
