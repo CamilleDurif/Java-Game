@@ -11,7 +11,7 @@ public class Craft extends Sprite {
 	private int dy;
 	private ArrayList<Missile> missiles; //list of visible missiles
 	
-	private boolean pressed = false;
+	//private boolean pressed = false;
 	
 	private boolean immune = false;
 
@@ -39,12 +39,12 @@ public class Craft extends Sprite {
 	 */
 	public void move(){
 		
-		if (pressed)
-			y += dy;
-		
+		/*if (pressed)
+			y += dy;*/
+		y += dy;
 		if(y<20) y=20;
 		if(y>264) y = 264;
-		pressed = false;
+		//pressed = false;
 		
 	}
 	
@@ -61,10 +61,10 @@ public class Craft extends Sprite {
 		int key = e.getKeyCode();
 		
 		if (key == KeyEvent.VK_UP)
-			dy = 0;
+			dy = -5;
 		
 		if (key == KeyEvent.VK_DOWN)
-			dy = 0;
+			dy = 5;
 		
 	}
 	
@@ -72,13 +72,11 @@ public class Craft extends Sprite {
 		
 		int key = e.getKeyCode();
 		
-		if (key == KeyEvent.VK_UP){
-			dy = -61;
-			pressed = true;}
+		if (key == KeyEvent.VK_UP)
+			dy = 0;
 		
-		if (key == KeyEvent.VK_DOWN){
-			dy = 61;
-			pressed = true;}
+		if (key == KeyEvent.VK_DOWN)
+			dy = 0;
 		
 		if (key == KeyEvent.VK_SPACE)
 			fire();

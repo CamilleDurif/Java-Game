@@ -39,10 +39,16 @@ public class Menu extends JPanel{
        optionButton.setName("optionsButton");
        c.gridy = 3;
        this.add(optionButton, c);
+       
+       JButton rulesButton = new JButton("Rules");
+       rulesButton.setName("rulesButton");
+       c.gridy = 4;
+       this.add(rulesButton, c);
       
        Frame frame = Frame.getFrame();
        startButton.addActionListener(frame);
        optionButton.addActionListener(frame);
+       rulesButton.addActionListener(frame);
 		/*ImageIcon ii = new ImageIcon(getClass().getResource("/fond4.png"));
         //Image image = ii.getImage();*/
        

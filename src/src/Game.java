@@ -47,6 +47,8 @@ public class Game extends JPanel implements ActionListener{
 	private ArrayList<Alien2> aliens2;
 	private ArrayList<Bonus> bonus;
 	
+	private int[][] ennemies = new int[5][4];
+	
 	public Game(){
 		
 		
@@ -93,13 +95,14 @@ public class Game extends JPanel implements ActionListener{
 		
 		back = new Background();
 		
-		initAliens();
+		//initAliens();
+		Alien.setSpeed(3);
 		Life.setSpeed(5);
 		Bonus.setSpeed(5);
 		
 		walls = new ArrayList<>();
 		lives = new ArrayList<>();
-		aliens2 = new ArrayList<>();
+		aliens = new ArrayList<>();
 		aliens2 = new ArrayList<>();
 		bonus = new ArrayList<>();
 				
@@ -146,7 +149,7 @@ public class Game extends JPanel implements ActionListener{
 		
 		g.drawImage(back.getImage(), -back.getPosX(), 0, this);
 		
-		if (back.getPosX() + B_WIDTH > back.getWidth()) {
+		if (back.getPosX() + 500 > back.getWidth()) {
             g.drawImage(back.getImage(), - back.getPosX() + back.getWidth(), 0, this);
         }
 		
@@ -221,8 +224,8 @@ public class Game extends JPanel implements ActionListener{
 	        updateWalls();
 	        updateLives();
 	        updateBonus();
-	        if(craft.getShoot() > 0)
-	        	updateAliens2();
+	        //if(craft.getShoot() > 0)
+	        updateAliens2();
         }
         
         if(inboss)
@@ -296,6 +299,7 @@ public class Game extends JPanel implements ActionListener{
 			ingame = false;
 		}
 		
+		
 		if(craft.isVisible())
 			craft.move();
 	}
@@ -324,7 +328,6 @@ public class Game extends JPanel implements ActionListener{
 			boss.vis = false;
     		score += 20;
     		boss.setLife(-1);
-    		//ingame = false;
     		inboss = false;
     		initAliens();
     		
@@ -340,10 +343,10 @@ public class Game extends JPanel implements ActionListener{
 	 * and there can be 10 aliens at the same time in maximum
 	 */
 	private void updateAliens(){
-		
+
+		// à déplacer dans une fonction plus appropriée, mais faire attention à ce que ça ne serelance pas tout le temps
 		//if(aliens.isEmpty()){
-		if(craft.getShoot()>0 && score < 20 && spawned > 50){
-			//ingame = false;
+		if(craft.getShoot()>0 && score > 50){
 			inboss = true;
 			initBoss();
 			return;
@@ -362,21 +365,22 @@ public class Game extends JPanel implements ActionListener{
 		
 		Random rand = new Random();
 		int spawn = rand.nextInt(1000);
-		int alienX =0;
-		
-		
+		//int alienX =0;
 		
 		if(spawn > 980 && aliens.size() < 10){
 			int posY = rand.nextInt(B_HEIGHT);
 			int posX = rand.nextInt(B_WIDTH) + 400;
 						
-			if(posY < 76) posY = 20;
-			else if(posY < 132) posY = 81;
-			else if(posY < 188) posY = 142;
-			else if(posY < 244) posY = 203;
-			else posY = 264;
+			if(posY < 76 && ennemies[0][2] == 0) aliens.add(new Alien(posX, 20));
+			else if(posY > 76 && posY < 132 && ennemies[1][2] == 0) aliens.add(new Alien(posX, 81));
+			else if(posY > 132 && posY < 188 && ennemies[2][2] == 0) aliens.add(new Alien(posX, 142));
+			else if(posY > 188 && posY < 244 && ennemies[3][2] == 0) aliens.add(new Alien(posX, 203));
+			else if(posY > 244 && posY < 305 && ennemies[4][2] == 0) aliens.add(new Alien(posX, 264));
 			
-			if(!aliens.isEmpty()){
+			/*if(ennemies[4][2] == 0 && ennemies[0][2] == 0 && ennemies[1][2] == 0 && ennemies[2][2] == 0 && ennemies[3][2] == 0)
+				aliens.add(new Alien(posX, posY));*/
+			
+			/*if(!aliens.isEmpty()){
 				Alien a = aliens.get(0);
 			if(Math.abs(posX-alienX) > a.width){
 				aliens.add(new Alien(posX, posY));
@@ -385,13 +389,14 @@ public class Game extends JPanel implements ActionListener{
 			}
 			else
 				aliens.add(new Alien(posX, posY));
+				*/
 
 		}
 	}
 	
 	public void updateWalls(){
 		
-		int wallX = 0;
+		//int wallX = 0;
 		
 		Random rand = new Random();
 		int spawn = rand.nextInt(1000);
@@ -400,29 +405,35 @@ public class Game extends JPanel implements ActionListener{
 			int posY = rand.nextInt(B_HEIGHT);
 			int posX = rand.nextInt(B_WIDTH) + 400;
 			
-			if(posY > 300) posY -= 100 ;
-		
+			//if(posY > 300) posY -= 100 ;
 			
-			
-			if(posY < 76) posY = 20;
-			else if(posY < 132) posY = 81;
-			else if(posY < 188) posY = 142;
-			else if(posY < 244) posY = 203;
-			else posY = 264;
-			
-			if((Math.abs(posX-wallX))> 300){
-				walls.add(new Wall(posX, posY));
-				wallX = posX;
+			if(posY < 76 && ennemies[0][2] == 0) walls.add(new Wall(posX, 20));
+			else if(posY > 76 && posY < 132 && ennemies[1][2] == 0) walls.add(new Wall(posX, 81));
+			else if(posY > 132 && posY < 188 && ennemies[2][2] == 0) walls.add(new Wall(posX, 142));
+			else if(posY > 188 && posY < 244 && ennemies[3][2] == 0) walls.add(new Wall(posX, 203));
+			else if(posY > 244 && posY < 305 && ennemies[4][2] == 0) walls.add(new Wall(posX, 264));
+				
+				if(posY < 76) ennemies[0][2] = 1;
+				else if(posY < 132) ennemies[1][2] = 1;
+				else if(posY < 188) ennemies[2][2] = 1;
+				else if(posY < 244) ennemies[3][2] = 1;
+				else if(posY < 305) ennemies[4][2] = 1;
 			}
-			
-		}
 		
 		for (int i = 0; i <walls.size(); i++){
 			Wall w = walls.get(i);
 			if (w.isVisible())
 				w.move();
-			else 
+			else{
 				walls.remove(i);
+				
+				int posY = w.getY();
+				if(posY == 20) ennemies[0][2] = 0;
+				else if(posY == 81) ennemies[1][2] = 0;
+				else if(posY == 142) ennemies[2][2] = 0;
+				else if(posY == 203) ennemies[3][2] = 0;
+				else if(posY == 264) ennemies[4][2] = 0;
+			}
 		}
 		
 	}
@@ -471,14 +482,14 @@ public class Game extends JPanel implements ActionListener{
 			
 			Random rand2 = new Random();
 			int bonustype = rand2.nextInt(3);
+			System.out.println("bonus n° " + bonustype + " vaisseau immune : " + craft.isImmune());
 			if (bonustype == 1)
 				bonus.add(new Bonus(B_WIDTH, posY, 1));
 			else if(bonustype == 2)
 				bonus.add(new Bonus(B_WIDTH, posY, 2));
-			else
+			else if(bonustype == 0 && !craft.isImmune())
 				bonus.add(new Bonus(B_WIDTH, posY, 3));
 				
-			
 			
 		}
 		
@@ -549,7 +560,6 @@ public class Game extends JPanel implements ActionListener{
 
             if (rC.intersects(rA)) {
             	alien.setVisible(false);
-            	// -----------------------------------------------------------------------------------------------
             	if(craft.isImmune())
             		craft.setImmune(false);
             	else{
@@ -558,12 +568,6 @@ public class Game extends JPanel implements ActionListener{
             		if(Craft.getCraft().getShoot() > 15)
                     	craft.setShoot(2);
             	}
-            	// -----------------------------------------------------------------------------------------------
-                //craft.downShoot();
-            	// -----------------------------------------------------------------------------------------------
-                //if(Craft.getCraft().getShoot() == 19)
-                //	craft.setShoot(2);
-            	// -----------------------------------------------------------------------------------------------
                 alien.playSound();
             }
         }
@@ -572,8 +576,7 @@ public class Game extends JPanel implements ActionListener{
         	Rectangle rA2 = alien.getBounds();
         	if(rC.intersects(rA2)){
         		alien.setVisible(false);
-        		alien.playSound();
-        		// -----------------------------------------------------------------------------------------------
+        		//alien.playSound();
         		if(craft.isImmune())
         			craft.setImmune(false);
         		else{
@@ -582,9 +585,7 @@ public class Game extends JPanel implements ActionListener{
         			if(Craft.getCraft().getShoot() > 15)
                     	craft.setShoot(2);
         		}
-        		// -----------------------------------------------------------------------------------------------
-        		//craft.downShoot();
-        	}  // -----------------------------------------------------------------------------------------------
+        	}  
         	
         }
         
@@ -600,7 +601,6 @@ public class Game extends JPanel implements ActionListener{
         			wall.playSound();
         			ingame = false;
         		}
-        		// -----------------------------------------------------------------------------------------------
         	}
         }
         for(Life l : lives){
@@ -616,7 +616,6 @@ public class Game extends JPanel implements ActionListener{
         	Rectangle rB = b.getBounds();
         	if(rC.intersects(rB)){
         		b.setVisible(false);
-        		// -----------------------------------------------------------------------------------------------
         		if(b.getBonusType() == 2)
         			craft.setShoot(20);
         		else if(b.getBonusType() == 1){
@@ -625,7 +624,6 @@ public class Game extends JPanel implements ActionListener{
         				craft.setShoot(3);}
         		else
         			craft.setImmune(true);
-        		// -----------------------------------------------------------------------------------------------
         	}
         }
        
@@ -645,7 +643,6 @@ public class Game extends JPanel implements ActionListener{
 	            if(rM.intersects(rB)){
 	            	m.setVisible(false);
 	            	boss.setLife(boss.getLife()-1);
-	            	System.out.println("boss life : " + boss.getLife());
 	            }
 	            
 	            for (BossMissile n : mb) {
@@ -683,7 +680,6 @@ public class Game extends JPanel implements ActionListener{
                 Rectangle rA = alien.getBounds();
 
                 if (rM.intersects(rA)) {
-                    //m.setVisible(false);
                     alien.setVisible(false);
                     score++;
                     alien.playSound();
@@ -696,7 +692,6 @@ public class Game extends JPanel implements ActionListener{
             for(Alien2 alien : aliens2){
             	Rectangle rA2 = alien.getBounds();
             	if(rM.intersects(rA2)){
-            		//m.setVisible(false);
             		if(craft.getShoot() != 20 ){
                 		m.setVisible(false);
                 	}
@@ -707,7 +702,13 @@ public class Game extends JPanel implements ActionListener{
             			alien.playSound();
             		}
             	}
-            }	
+            }
+            
+            for(Wall wall : walls){
+            	Rectangle rW = wall.getBounds();
+            	if(rM.intersects(rW))
+            		m.setVisible(false);
+            }
         }
     }
 	
@@ -726,7 +727,5 @@ public class Game extends JPanel implements ActionListener{
 			craft.keyPressed(e);
 
 		}
-		
-		
 	}
 }

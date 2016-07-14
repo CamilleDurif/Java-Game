@@ -17,7 +17,7 @@ public class Wall extends Sprite{
 	
 	public void move(){
 		
-		if(x<0)
+		if(x+width<0)
 			vis = false;
 			
 		x-=2;
