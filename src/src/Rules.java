@@ -7,9 +7,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -31,6 +31,8 @@ public class Rules extends JPanel{
 		UIManager.put("TabbedPane.contentOpaque", Boolean.FALSE);
 		JTabbedPane tab = new JTabbedPane();
 		tab.setOpaque(false);
+		Myfont.setMyfont(tab);
+		tab.setBackground(new Color(255,255,255,120));
 		
 		tab.addTab("Commands", tab1);
 		tab.addTab("Bonus effects", tab2);
@@ -39,7 +41,7 @@ public class Rules extends JPanel{
 
 		JPanel pan = new JPanel();
 		
-		JButton exitButton = new JButton("EXIT");
+		Button exitButton = new Button("Exit");
 		exitButton.setName("exitButton");
 		
 		pan.add(exitButton);
@@ -62,10 +64,12 @@ public class Rules extends JPanel{
 		c.insets = new Insets(10,10,10,10);
 		
 		JLabel jinst1 = new JLabel("Use UP and DOWN to move");
+		Myfont.setMyfont(jinst1);
 		c.gridy = 1;
 		tab1.add(jinst1, c);
 		
 		JLabel jinst2 = new JLabel("Use SPACE to shoot");
+		Myfont.setMyfont(jinst2);
 		c.gridy = 2;
 		tab1.add(jinst2, c);
 		
@@ -87,13 +91,14 @@ public class Rules extends JPanel{
 		c.gridx = 1;
 		tab2.add(jlab, c);
 		
-		JLabel jlab2 = new JLabel("Upgrade missile shoot");
+		JLabel jlab2 = new JLabel("Upgrade missile");
+		Myfont.setMyfont(jlab2);
 		//c.anchor = GridBagConstraints.EAST;
 		c.gridy = 3;
 		c.gridx = 2;
 		tab2.add(jlab2, c);
 		
-		/*ArrayList<JLabel> rules = new ArrayList<JLabel>();
+		ArrayList<JLabel> rules = new ArrayList<JLabel>();
 		
 		rules.add(new JLabel("1: Fire up to 5 missiles"));
 		rules.add(new JLabel("2: Fire infinite missiles"));
@@ -104,40 +109,47 @@ public class Rules extends JPanel{
 		int i = 0;
 		
 		for(JLabel j : rules){
-			g.gridx = i;
-			//g.gridy = 2;
-			tab2.add(j);
-		}*/
+			Myfont.setMyfont(j);
+			c.gridx = 6;
+			c.gridy = i;
+			tab2.add(j, c);
+			i++;
+		}
 		
-		JLabel jlab21 = new JLabel("1: Fire up to 5 missiles");
+		/*JLabel jlab21 = new JLabel("1: Up to 5 missiles");
+		Myfont.setMyfont(jlab21);
 		c.anchor = GridBagConstraints.WEST;
 		c.gridx = 3;
 		c.gridy = 3;
 		tab2.add(jlab21, c);
 		
-		JLabel jlab22 = new JLabel("2: Fire infinite missiles");
+		JLabel jlab22 = new JLabel("2: Infinite missiles");
+		Myfont.setMyfont(jlab22);
 		c.anchor = GridBagConstraints.WEST;
 		c.gridx = 3;
 		c.gridy = 4;
 		tab2.add(jlab22, c);
 		
-		JLabel jlab23 = new JLabel("3: Fire missile on two rows");
+		JLabel jlab23 = new JLabel("3: On two rows");
+		Myfont.setMyfont(jlab23);
 		c.anchor = GridBagConstraints.WEST;
 		c.gridx = 3;
 		c.gridy = 5;
 		tab2.add(jlab23, c);
 		
-		JLabel jlab24 = new JLabel("4: Fire on three rows");
+		JLabel jlab24 = new JLabel("4: On three rows");
+		Myfont.setMyfont(jlab24);
 		c.anchor = GridBagConstraints.WEST;
 		c.gridx = 3;
 		c.gridy = 6;
 		tab2.add(jlab24, c);
 		
-		JLabel jlab25 = new JLabel("5: Fire on five rows");
+		JLabel jlab25 = new JLabel("5: On five rows");
+		Myfont.setMyfont(jlab25);
 		c.anchor = GridBagConstraints.WEST;
 		c.gridx = 3;
 		c.gridy = 7;
-		tab2.add(jlab25, c);
+		tab2.add(jlab25, c);*/
 		
 		
 		ImageIcon i2 = new ImageIcon(getClass().getResource("/" + Frame.getTheme() + "_bonus2.png"));
@@ -147,6 +159,7 @@ public class Rules extends JPanel{
 		tab2.add(jlab3, c);
 		
 		JLabel jlab4 = new JLabel("Best missile shoot");
+		Myfont.setMyfont(jlab4);
 		c.gridy = 8;
 		c.gridx = 2;
 		tab2.add(jlab4, c);
@@ -158,6 +171,7 @@ public class Rules extends JPanel{
 		tab2.add(jlab5, c);
 		
 		JLabel jlab6 = new JLabel("Immune to next damage");
+		Myfont.setMyfont(jlab6);
 		c.gridy = 9;
 		c.gridx = 2;
 		tab2.add(jlab6, c);

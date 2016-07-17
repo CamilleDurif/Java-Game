@@ -6,28 +6,24 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 
 @SuppressWarnings("serial")
-public class Options extends JPanel{
+public class Options extends JPanel implements ActionListener{
 	
 	private JTextField nameField;
-	
+		
 	public Options(){
 		
 		super(new GridBagLayout());
-		
-		//this.setBackground(Color.black);
-		//this.setBackground(new Color(0,0,0,20));
-		
-		/*if(Frame.getTheme() == "theme2")
-			this.setBackground(Color.white);*/
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.insets = new Insets(10,10,10,10);
@@ -35,24 +31,26 @@ public class Options extends JPanel{
 		String playerName = Frame.getPlayerName();
 		
 		JLabel nameLabel = new JLabel("Set Player Name");
+		Myfont.setFontSize(nameLabel, 15);
         c.gridy = 1;
         this.add(nameLabel, c);
 		
 		nameField = new JTextField(playerName, 15); 
+		Myfont.setFontSize(nameField, 15);
         c.gridy = 2;
         this.add(nameField, c);
         
-        JButton skinButton = new JButton("Change Skin");
+        Button skinButton = new Button("Change Skin");
         skinButton.setName("skinButton");
         c.gridy = 3;
         this.add(skinButton, c);
 
-        JButton deleteButton = new JButton("Delete scores");
+        Button deleteButton = new Button("Delete scores");
         deleteButton.setName("deleteButton");
         c.gridy = 4;
         this.add(deleteButton, c);
         
-        JButton okButton = new JButton("OK");
+        Button okButton = new Button("OK");
         okButton.setName("okButton");
         c.gridy = 5;
         this.add(okButton, c);
@@ -63,13 +61,28 @@ public class Options extends JPanel{
         okButton.addActionListener(frame);
 	}
 	
-	public int showMessage(){
-		new JOptionPane();
-		int option = JOptionPane.showConfirmDialog(null, "Are you sure ?", "Delete Scores", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-		if(option == JOptionPane.OK_OPTION)
-			return 1;
-		else 
-			return 0;
+	public void showMessage(){
+		
+		Button yes = new Button("Yes");
+		yes.setName("Yes");
+		yes.addActionListener(Frame.getFrame());
+		yes.addActionListener(this);
+		
+		Button no = new Button("No");
+		no.setName("No");
+		no.addActionListener(Frame.getFrame());
+		no.addActionListener(this);
+		
+		Button[] buttons = {yes, no};
+		
+		JLabel jl = new JLabel("Are you sure ?");
+		Myfont.setMyfont(jl);
+		
+		UIManager.put("OptionPane.background", new Color(253,253,253));
+		UIManager.put("Panel.background", new Color(253,253,253));
+		
+		JOptionPane.showOptionDialog(null, jl, "Delete Scores", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, buttons, buttons[1]);
+		
 	}
 	
 	public void setPlayerName(){
@@ -99,5 +112,9 @@ public class Options extends JPanel{
 		g.fillRect(0, 0, 500, 500);
 		
 	}
-
+	
+	@Override
+	public void actionPerformed(ActionEvent e){
+		JOptionPane.getRootFrame().dispose();
+	}
 }

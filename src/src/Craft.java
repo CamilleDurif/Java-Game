@@ -61,10 +61,10 @@ public class Craft extends Sprite {
 		int key = e.getKeyCode();
 		
 		if (key == KeyEvent.VK_UP)
-			dy = -5;
+			dy = -10;
 		
 		if (key == KeyEvent.VK_DOWN)
-			dy = 5;
+			dy =10;
 		
 	}
 	

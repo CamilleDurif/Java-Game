@@ -32,6 +32,8 @@ public class Frame extends JFrame implements ActionListener{
 	private static String theme = "pokemon";
 	
 	public static boolean previousmenu = true;
+	
+	private boolean delete = false;
 
 	
 	public Frame(){
@@ -84,6 +86,10 @@ public class Frame extends JFrame implements ActionListener{
 			doRules();
 		else if(((JButton)e.getSource()).getName().equals("exitButton"))
 			doExitRules();
+		else if(((JButton)e.getSource()).getName().equals("Yes"))
+			delete = true;
+		else if(((JButton)e.getSource()).getName().equals("No"))
+			delete = false;
 			
 	}
 	
@@ -125,9 +131,12 @@ public class Frame extends JFrame implements ActionListener{
 	
 	public void doDelete(){
 		
-		int i = options.showMessage();
-		if(i==1)
+		options.showMessage();
+		
+		if(delete){
 			scoreboard.deleteScores();
+			delete = false;
+		}
 	}
 	
 	public void doValidate(){

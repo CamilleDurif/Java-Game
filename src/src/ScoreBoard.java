@@ -21,7 +21,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -174,6 +173,7 @@ public class ScoreBoard extends JPanel implements ActionListener{
 		while(i < x && i < 5){
 			score = scores.get(i).toString();
 			JLabel jl = new JLabel(score);
+			Myfont.setMyfont(jl);
 			if(i == index && i!=0 && newRecord)
 				jl.setForeground(Color.RED);
 	        c.gridx = 1;
@@ -183,6 +183,7 @@ public class ScoreBoard extends JPanel implements ActionListener{
 		}
 		
 		JLabel js = new JLabel("Best Scores");
+		Myfont.setMyfont(js);
 		c.gridx = 1;
 		c.gridy = 1;
 		this.add(js, c);
@@ -195,6 +196,7 @@ public class ScoreBoard extends JPanel implements ActionListener{
 		if(newRecord && index < 5){
 			JLabel jr = new JLabel("NEW RECORD");
 			jr.setForeground(Color.BLUE);
+			Myfont.setMyfont(jr);
 			c.insets = new Insets(0,0,0,0);
 			c.gridx = 1;
 			c.gridy = 3;
@@ -215,13 +217,13 @@ public class ScoreBoard extends JPanel implements ActionListener{
 		
 		c.insets = new Insets(10,10,10,10);
 		
-		JButton tryagainB = new JButton("Try Again ?");
+		Button tryagainB = new Button("Try Again ?");
 		tryagainB.setName("tryagainB");
 		tryagainB.addActionListener(this);
 		c.gridy = 11;
 		this.add(tryagainB, c);
 		
-		JButton optionsButton = new JButton("Options");
+		Button optionsButton = new Button("Options");
 		optionsButton.setName("optionsButton");
 		optionsButton.addActionListener(this);
 		c.gridy = 12;
@@ -242,9 +244,9 @@ public class ScoreBoard extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e){
 		
-		if(((JButton)e.getSource()).getName().equals("tryagainB"))
+		if(((Button)e.getSource()).getName().equals("tryagainB"))
 			Frame.getFrame().doTryAgain();
-		else if(((JButton)e.getSource()).getName().equals("optionsButton")){
+		else if(((Button)e.getSource()).getName().equals("optionsButton")){
 			Frame.getFrame().doOptions();
 			Frame.previousmenu = false;
 		}

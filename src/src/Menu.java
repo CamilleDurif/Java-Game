@@ -8,7 +8,6 @@ import java.awt.Image;
 import java.awt.Insets;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -24,23 +23,24 @@ public class Menu extends JPanel{
 		
 		GridBagConstraints c = new GridBagConstraints();
         
-       JLabel instructions = new JLabel("Use UP and DOWN to move");
+       JLabel instructions = new JLabel("Welcome");
+       Myfont.setFontSize(instructions, 30);
        c.insets = new Insets(10,10,10,10); //marges autour du composant. valable pour TOUS les composants
        //c.gridx = 2; //position colonne
        c.gridy = 0; //position ligne
        this.add(instructions, c);
        
-       JButton startButton = new JButton("New Game");
+       Button startButton = new Button("New Game");
        startButton.setName("startButton");
        c.gridy = 2;
        this.add(startButton, c);
        
-       JButton optionButton = new JButton("Options");
+       Button optionButton = new Button("Options");
        optionButton.setName("optionsButton");
        c.gridy = 3;
        this.add(optionButton, c);
        
-       JButton rulesButton = new JButton("Rules");
+       Button rulesButton = new Button("Rules");
        rulesButton.setName("rulesButton");
        c.gridy = 4;
        this.add(rulesButton, c);

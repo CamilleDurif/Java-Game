@@ -1,10 +1,13 @@
 package src;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +16,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
@@ -26,6 +30,10 @@ public class Game extends JPanel implements ActionListener{
 	private final int ICRAFT_X = 50;
 	private final int ICRAFT_Y = 142;
 	private final int DELAY = 15;
+	
+	private CardLayout cl = new CardLayout();
+	private JPanel content = new JPanel();
+	
 	private Timer timer;
 	private Craft craft;
 	private Boss boss;
@@ -47,10 +55,15 @@ public class Game extends JPanel implements ActionListener{
 	private ArrayList<Alien2> aliens2;
 	private ArrayList<Bonus> bonus;
 	
+	private JPanel scorepan;
+	private JLabel scorelab;
+	private JLabel lifelab;
+	
+	private boolean paused;
+	
 	private int[][] ennemies = new int[5][4];
 	
 	public Game(){
-		
 		
 		initBoard();
 		
@@ -88,6 +101,7 @@ public class Game extends JPanel implements ActionListener{
 		life = 3;
 		spawned = 0;
 		inboss = false;
+		paused = false;
 		
 		setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
 			
@@ -105,10 +119,89 @@ public class Game extends JPanel implements ActionListener{
 		aliens = new ArrayList<>();
 		aliens2 = new ArrayList<>();
 		bonus = new ArrayList<>();
-				
+		
+		initScorepan();
+
+		//this.setLayout(new FlowLayout(FlowLayout.LEFT));
+		//this.setLayout(new BorderLayout());
+		content.setLayout(cl);
+		content.add(this, "Game");
+		cl.show(content, "Game");
+		
+		/*pause = new JPanel();
+		pause.setBackground(new Color(0,0,0,150));
+		JLabel pauselab = new JLabel("Game Paused");
+		pause.add(pauselab);
+		//content.add(pause, "Pause");*/
+						
 		timer = new Timer(DELAY, this);
 		timer.start();
 		
+	}
+	
+	public void initScorepan(){
+		
+
+		scorepan = new JPanel(new GridBagLayout());
+		
+		scorepan.setPreferredSize(new Dimension(200,80));
+		
+		scorepan.setBackground(new Color(0,0,0,0));
+		
+		GridBagConstraints c = new GridBagConstraints();
+		
+		c.insets = new Insets(3,3,3,3);
+		
+		scorelab = new JLabel("Score : " + score);
+		Myfont.setMyfont(scorelab);
+		c.fill = GridBagConstraints.BOTH;
+		c.gridy = 0;
+		c.anchor = GridBagConstraints.WEST;
+		scorepan.add(scorelab, c);
+		lifelab = new JLabel("Life : " + life);
+		Myfont.setMyfont(lifelab);
+		c.fill = GridBagConstraints.BOTH;
+		c.gridy = 1;
+		c.anchor = GridBagConstraints.WEST;
+		scorepan.add(lifelab, c);
+		/*JLabel testlab = new JLabel("iuzhfozhjertertertfizjfiehfizh");
+		testlab.setForeground(new Color(0,0,0,0));
+		c.fill = GridBagConstraints.BOTH;
+		c.gridy = 2;
+		scorepan.add(testlab, c);*/
+		
+		this.add(scorepan);
+		
+	}
+	
+	public void updateScorepan(){
+		
+		scorepan.removeAll();
+		
+		GridBagConstraints c = new GridBagConstraints();
+		
+		c.insets = new Insets(3,3,3,3);
+		
+		scorelab = new JLabel("Score : " + score);
+		Myfont.setMyfont(scorelab);
+		c.fill = GridBagConstraints.BOTH;
+		c.gridy = 0;
+		c.anchor = GridBagConstraints.WEST;
+		scorepan.add(scorelab, c);
+		lifelab = new JLabel("Life : " + life);
+		Myfont.setMyfont(lifelab);
+		c.fill = GridBagConstraints.BOTH;
+		c.gridy = 1;
+		c.anchor = GridBagConstraints.WEST;
+		scorepan.add(lifelab, c);
+		/*JLabel testlab = new JLabel("iuzhfozhjfizertetertejfiehfizh");
+		testlab.setForeground(new Color(0,0,0,0));
+		c.fill = GridBagConstraints.BOTH;
+		c.gridy = 2;
+		scorepan.add(testlab, c);*/
+		
+		scorepan.validate();
+		scorepan.repaint();
 	}
 	
 	/*
@@ -118,7 +211,7 @@ public class Game extends JPanel implements ActionListener{
 	 */
 	public void initAliens(){
 		
-		aliens = new ArrayList<>();
+		//aliens = new ArrayList<>();
 		
 		for(int i = 0; i<5; i++){
 			Random rand = new Random();
@@ -145,6 +238,7 @@ public class Game extends JPanel implements ActionListener{
 	@SuppressWarnings("unchecked")
 	@Override
 	public void paintComponent(Graphics g){
+		
 		super.paintComponent(g);
 		
 		g.drawImage(back.getImage(), -back.getPosX(), 0, this);
@@ -201,12 +295,26 @@ public class Game extends JPanel implements ActionListener{
         		g.drawImage(a.getImage(), a.getX(), a.getY(), this);
         }
         
-        Font f = new Font("Dialog", Font.BOLD,20);
-        g.setFont(f);
-        g.setColor(Color.BLACK);
-        g.drawString("Score : " + score, 5, 20);
-        g.drawString("Life left : " + life, 5, 40);
-        g.drawString("Spawned : " + spawned, 5, 60);
+        //Myfont.setGraphicFont(g);
+        /*g.drawString("Score : " + score, 5, 20);
+        g.drawString("Life left : " + life, 5, 40);*/
+        //g.drawString("Spawned : " + spawned, 5, 60);
+        
+        if(paused){
+        	g.setColor(new Color(0,0,0,150));
+        	//g.drawRect(0, 0, 500, 500);
+        	g.fillRect(0, 0, 500, 500);
+        	g.setColor(Color.gray);
+        	g.fillRect(B_WIDTH/2 - 100, B_HEIGHT/2 - 25, 220, 60);
+        	g.setColor(Color.black);
+        	g.drawRect(B_WIDTH/2 - 100, B_HEIGHT/2 - 25, 220, 60);
+        	Myfont.setGraphicFont(g);
+        	g.setColor(Color.white);
+        	g.drawString("Game Paused", B_WIDTH/2 - 60, B_HEIGHT/2);
+        	Myfont.setGraphicFontSize(g, 10);
+        	g.drawString("Press P to  resume", B_WIDTH/2 - 60, B_HEIGHT/2 + 20);
+        }
+        
 	}
 	
 	@Override
@@ -251,6 +359,31 @@ public class Game extends JPanel implements ActionListener{
 			frame.gameOver(score, spawned, life);
 			
 		}
+	}
+	
+	public void doPause(){
+
+		if(timer.isRunning()){
+			paused = true;
+			repaint();
+			timer.stop();
+			//this.add(pause, BorderLayout.CENTER);
+			//this.validate();
+			//this.repaint();
+			//cl.show(content, "Pause");
+			
+		}
+		
+		else{
+			timer.start();
+			//pause.removeAll();
+			//pause.setBackground(new Color(0,0,0,0));
+			//cl.show(content, "Game");
+			paused = false;
+		}
+		
+
+		
 	}
 
 	
@@ -346,7 +479,7 @@ public class Game extends JPanel implements ActionListener{
 
 		// à déplacer dans une fonction plus appropriée, mais faire attention à ce que ça ne serelance pas tout le temps
 		//if(aliens.isEmpty()){
-		if(craft.getShoot()>0 && score > 50){
+		if(craft.getShoot()>0 && score > 100 && score < 12){
 			inboss = true;
 			initBoss();
 			return;
@@ -482,7 +615,7 @@ public class Game extends JPanel implements ActionListener{
 			
 			Random rand2 = new Random();
 			int bonustype = rand2.nextInt(3);
-			System.out.println("bonus n° " + bonustype + " vaisseau immune : " + craft.isImmune());
+			//System.out.println("bonus n° " + bonustype + " vaisseau immune : " + craft.isImmune());
 			if (bonustype == 1)
 				bonus.add(new Bonus(B_WIDTH, posY, 1));
 			else if(bonustype == 2)
@@ -564,6 +697,7 @@ public class Game extends JPanel implements ActionListener{
             		craft.setImmune(false);
             	else{
             		life--;
+            		updateScorepan();
             		craft.downShoot();
             		if(Craft.getCraft().getShoot() > 15)
                     	craft.setShoot(2);
@@ -607,11 +741,14 @@ public class Game extends JPanel implements ActionListener{
         	Rectangle rL = l.getBounds();
         	if(rC.intersects(rL)){
         		life++;
+        		updateScorepan();
         		l.setVisible(false);
         		l.playSound();
         	}
         }
-        
+        //TODO 
+        //faire en sorte que les bonus popent pas n'importe quand, genre si master ball, pas d'autre bonus
+        // et bonus master ball ne pop que quand bonus missile au max
         for(Bonus b : bonus){
         	Rectangle rB = b.getBounds();
         	if(rC.intersects(rB)){
@@ -621,7 +758,9 @@ public class Game extends JPanel implements ActionListener{
         		else if(b.getBonusType() == 1){
         			craft.upShoot();
         			if(craft.getShoot() == 21)
-        				craft.setShoot(3);}
+        				craft.setShoot(3);
+        			if(craft.getShoot() == 6)
+        				craft.setShoot(5);}
         		else
         			craft.setImmune(true);
         	}
@@ -663,6 +802,7 @@ public class Game extends JPanel implements ActionListener{
 	            if(rC.intersects(rMB)){
 	            	n.setVisible(false);
 	            	life--;
+	            	updateScorepan();
 	            	craft.downShoot();
 	            }
             }
@@ -682,6 +822,7 @@ public class Game extends JPanel implements ActionListener{
                 if (rM.intersects(rA)) {
                     alien.setVisible(false);
                     score++;
+                    updateScorepan();
                     alien.playSound();
                     if(craft.getShoot() != 20 ){
                 		m.setVisible(false);
@@ -699,6 +840,7 @@ public class Game extends JPanel implements ActionListener{
             		if(alien.count == 0){
             			alien.setVisible(false);
             			score+=2;
+            			updateScorepan();
             			alien.playSound();
             		}
             	}
@@ -718,6 +860,12 @@ public class Game extends JPanel implements ActionListener{
 		public void keyReleased(KeyEvent e){
 			
 			craft.keyReleased(e);
+			
+			int key = e.getKeyCode();
+			
+			if(key == KeyEvent.VK_P)
+				doPause();
+				
 			
 		}
 		
