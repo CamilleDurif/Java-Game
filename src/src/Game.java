@@ -1,6 +1,5 @@
 package src;
 
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -30,10 +29,7 @@ public class Game extends JPanel implements ActionListener{
 	private final int ICRAFT_X = 50;
 	private final int ICRAFT_Y = 142;
 	private final int DELAY = 15;
-	
-	private CardLayout cl = new CardLayout();
-	private JPanel content = new JPanel();
-	
+		
 	private Timer timer;
 	private Craft craft;
 	private Boss boss;
@@ -108,8 +104,7 @@ public class Game extends JPanel implements ActionListener{
 		craft = new Craft(ICRAFT_X, ICRAFT_Y);
 		
 		back = new Background();
-		
-		//initAliens();
+	
 		Alien.setSpeed(3);
 		Life.setSpeed(5);
 		Bonus.setSpeed(5);
@@ -122,18 +117,6 @@ public class Game extends JPanel implements ActionListener{
 		
 		initScorepan();
 
-		//this.setLayout(new FlowLayout(FlowLayout.LEFT));
-		//this.setLayout(new BorderLayout());
-		content.setLayout(cl);
-		content.add(this, "Game");
-		cl.show(content, "Game");
-		
-		/*pause = new JPanel();
-		pause.setBackground(new Color(0,0,0,150));
-		JLabel pauselab = new JLabel("Game Paused");
-		pause.add(pauselab);
-		//content.add(pause, "Pause");*/
-						
 		timer = new Timer(DELAY, this);
 		timer.start();
 		
@@ -164,11 +147,6 @@ public class Game extends JPanel implements ActionListener{
 		c.gridy = 1;
 		c.anchor = GridBagConstraints.WEST;
 		scorepan.add(lifelab, c);
-		/*JLabel testlab = new JLabel("iuzhfozhjertertertfizjfiehfizh");
-		testlab.setForeground(new Color(0,0,0,0));
-		c.fill = GridBagConstraints.BOTH;
-		c.gridy = 2;
-		scorepan.add(testlab, c);*/
 		
 		this.add(scorepan);
 		
@@ -194,11 +172,6 @@ public class Game extends JPanel implements ActionListener{
 		c.gridy = 1;
 		c.anchor = GridBagConstraints.WEST;
 		scorepan.add(lifelab, c);
-		/*JLabel testlab = new JLabel("iuzhfozhjfizertetertejfiehfizh");
-		testlab.setForeground(new Color(0,0,0,0));
-		c.fill = GridBagConstraints.BOTH;
-		c.gridy = 2;
-		scorepan.add(testlab, c);*/
 		
 		scorepan.validate();
 		scorepan.repaint();
@@ -210,8 +183,6 @@ public class Game extends JPanel implements ActionListener{
 	 * at the beginning, 5 aliens are generated 
 	 */
 	public void initAliens(){
-		
-		//aliens = new ArrayList<>();
 		
 		for(int i = 0; i<5; i++){
 			Random rand = new Random();
@@ -295,14 +266,8 @@ public class Game extends JPanel implements ActionListener{
         		g.drawImage(a.getImage(), a.getX(), a.getY(), this);
         }
         
-        //Myfont.setGraphicFont(g);
-        /*g.drawString("Score : " + score, 5, 20);
-        g.drawString("Life left : " + life, 5, 40);*/
-        //g.drawString("Spawned : " + spawned, 5, 60);
-        
         if(paused){
         	g.setColor(new Color(0,0,0,150));
-        	//g.drawRect(0, 0, 500, 500);
         	g.fillRect(0, 0, 500, 500);
         	g.setColor(Color.gray);
         	g.fillRect(B_WIDTH/2 - 100, B_HEIGHT/2 - 25, 220, 60);
@@ -332,7 +297,6 @@ public class Game extends JPanel implements ActionListener{
 	        updateWalls();
 	        updateLives();
 	        updateBonus();
-	        //if(craft.getShoot() > 0)
 	        updateAliens2();
         }
         
@@ -367,23 +331,12 @@ public class Game extends JPanel implements ActionListener{
 			paused = true;
 			repaint();
 			timer.stop();
-			//this.add(pause, BorderLayout.CENTER);
-			//this.validate();
-			//this.repaint();
-			//cl.show(content, "Pause");
-			
 		}
 		
 		else{
 			timer.start();
-			//pause.removeAll();
-			//pause.setBackground(new Color(0,0,0,0));
-			//cl.show(content, "Game");
 			paused = false;
 		}
-		
-
-		
 	}
 
 	
@@ -477,9 +430,8 @@ public class Game extends JPanel implements ActionListener{
 	 */
 	private void updateAliens(){
 
-		// à déplacer dans une fonction plus appropriée, mais faire attention à ce que ça ne serelance pas tout le temps
-		//if(aliens.isEmpty()){
-		if(craft.getShoot()>0 && score > 100 && score < 12){
+		//to move away
+		if(craft.getShoot()>0 && spawned > 50 && score < 30){
 			inboss = true;
 			initBoss();
 			return;
@@ -498,7 +450,6 @@ public class Game extends JPanel implements ActionListener{
 		
 		Random rand = new Random();
 		int spawn = rand.nextInt(1000);
-		//int alienX =0;
 		
 		if(spawn > 980 && aliens.size() < 10){
 			int posY = rand.nextInt(B_HEIGHT);
@@ -509,27 +460,11 @@ public class Game extends JPanel implements ActionListener{
 			else if(posY > 132 && posY < 188 && ennemies[2][2] == 0) aliens.add(new Alien(posX, 142));
 			else if(posY > 188 && posY < 244 && ennemies[3][2] == 0) aliens.add(new Alien(posX, 203));
 			else if(posY > 244 && posY < 305 && ennemies[4][2] == 0) aliens.add(new Alien(posX, 264));
-			
-			/*if(ennemies[4][2] == 0 && ennemies[0][2] == 0 && ennemies[1][2] == 0 && ennemies[2][2] == 0 && ennemies[3][2] == 0)
-				aliens.add(new Alien(posX, posY));*/
-			
-			/*if(!aliens.isEmpty()){
-				Alien a = aliens.get(0);
-			if(Math.abs(posX-alienX) > a.width){
-				aliens.add(new Alien(posX, posY));
-				alienX = posX;
-				}
-			}
-			else
-				aliens.add(new Alien(posX, posY));
-				*/
-
+		
 		}
 	}
 	
 	public void updateWalls(){
-		
-		//int wallX = 0;
 		
 		Random rand = new Random();
 		int spawn = rand.nextInt(1000);
@@ -537,8 +472,6 @@ public class Game extends JPanel implements ActionListener{
 		if(spawn > 990 && walls.size()<=2){
 			int posY = rand.nextInt(B_HEIGHT);
 			int posX = rand.nextInt(B_WIDTH) + 400;
-			
-			//if(posY > 300) posY -= 100 ;
 			
 			if(posY < 76 && ennemies[0][2] == 0) walls.add(new Wall(posX, 20));
 			else if(posY > 76 && posY < 132 && ennemies[1][2] == 0) walls.add(new Wall(posX, 81));
@@ -615,10 +548,9 @@ public class Game extends JPanel implements ActionListener{
 			
 			Random rand2 = new Random();
 			int bonustype = rand2.nextInt(3);
-			//System.out.println("bonus n° " + bonustype + " vaisseau immune : " + craft.isImmune());
 			if (bonustype == 1)
 				bonus.add(new Bonus(B_WIDTH, posY, 1));
-			else if(bonustype == 2)
+			else if(bonustype == 2 && craft.getShoot() < 20 && craft.getShoot() > 4)
 				bonus.add(new Bonus(B_WIDTH, posY, 2));
 			else if(bonustype == 0 && !craft.isImmune())
 				bonus.add(new Bonus(B_WIDTH, posY, 3));
@@ -669,7 +601,7 @@ public class Game extends JPanel implements ActionListener{
 			back.setSpeed((back.getSpeed()+1)); ;
 			Alien.setSpeed((Alien.getSpeed()+1));
 			Life.setSpeed((Life.getSpeed()+1));
-			spawned++; //triche, à modifier
+			spawned++;
 			}
 		
 	}
@@ -682,7 +614,6 @@ public class Game extends JPanel implements ActionListener{
 	public void checkCollisions(){
 		
 		if(life < 0){
-			//Sound.play("gyarados.wav");
 		}
 		
 
@@ -710,7 +641,6 @@ public class Game extends JPanel implements ActionListener{
         	Rectangle rA2 = alien.getBounds();
         	if(rC.intersects(rA2)){
         		alien.setVisible(false);
-        		//alien.playSound();
         		if(craft.isImmune())
         			craft.setImmune(false);
         		else{
@@ -746,9 +676,7 @@ public class Game extends JPanel implements ActionListener{
         		l.playSound();
         	}
         }
-        //TODO 
-        //faire en sorte que les bonus popent pas n'importe quand, genre si master ball, pas d'autre bonus
-        // et bonus master ball ne pop que quand bonus missile au max
+        
         for(Bonus b : bonus){
         	Rectangle rB = b.getBounds();
         	if(rC.intersects(rB)){
@@ -803,7 +731,8 @@ public class Game extends JPanel implements ActionListener{
 	            	n.setVisible(false);
 	            	life--;
 	            	updateScorepan();
-	            	craft.downShoot();
+	            	if(craft.getShoot() > 1)
+	            		craft.downShoot();
 	            }
             }
 	    }

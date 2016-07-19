@@ -11,8 +11,6 @@ public class Craft extends Sprite {
 	private int dy;
 	private ArrayList<Missile> missiles; //list of visible missiles
 	
-	//private boolean pressed = false;
-	
 	private boolean immune = false;
 
 	private int missilestate;
@@ -39,12 +37,9 @@ public class Craft extends Sprite {
 	 */
 	public void move(){
 		
-		/*if (pressed)
-			y += dy;*/
 		y += dy;
 		if(y<20) y=20;
 		if(y>264) y = 264;
-		//pressed = false;
 		
 	}
 	

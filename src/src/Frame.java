@@ -95,8 +95,6 @@ public class Frame extends JFrame implements ActionListener{
 	
 	public void doOptions(){
 		
-		/*options = new Options();
-		content.add(options, "Options");*/
 		cl.show(content, "Options");
 		
 	}
@@ -143,7 +141,6 @@ public class Frame extends JFrame implements ActionListener{
 		
 		options.setPlayerName();
 		if(previousmenu){
-			//menu = new Menu();
 			cl.show(content, "Menu");
 		}
 		else{
@@ -155,7 +152,6 @@ public class Frame extends JFrame implements ActionListener{
 	}
 	
 	public void doTryAgain(){
-		//content.removeAll();
 		game = new Game();
 		content.add(game, "Game");
 		cl.show(content, "Game");
@@ -166,7 +162,6 @@ public class Frame extends JFrame implements ActionListener{
 		
 		game = new Game();
 		content.add(game, "Game");
-		//content.remove(menu);
 		cl.show(content, "Game");
 		bg.play("game");
 	}
@@ -197,11 +192,6 @@ public class Frame extends JFrame implements ActionListener{
 	 * it adds a new gameover panel to the content, which is the one shown by the content
 	 */
 	public void gameOver(int pscore, int result, int life){
-		
-		/*GameOver gameover = new GameOver(score, result, life);
-		content.add(gameover, "GameOver");
-		cl.show(content, "GameOver");
-		this.add(bouton, BorderLayout.SOUTH);*/
 		
 		scoreboard.addScore(Frame.getPlayerName(), pscore);
 		content.add(scoreboard, "ScoreBoard");

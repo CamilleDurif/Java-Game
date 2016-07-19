@@ -174,7 +174,7 @@ public class ScoreBoard extends JPanel implements ActionListener{
 			score = scores.get(i).toString();
 			JLabel jl = new JLabel(score);
 			Myfont.setMyfont(jl);
-			if(i == index && i!=0 && newRecord)
+			if(i == index && newRecord)
 				jl.setForeground(Color.RED);
 	        c.gridx = 1;
 	        c.gridy = i+5;
@@ -188,11 +188,6 @@ public class ScoreBoard extends JPanel implements ActionListener{
 		c.gridy = 1;
 		this.add(js, c);
 		
-		/*JLabel j = new JLabel(" ");
-		c.gridx = 1;
-		c.gridy = 2;
-		this.add(j, c);*/
-		
 		if(newRecord && index < 5){
 			JLabel jr = new JLabel("NEW RECORD");
 			jr.setForeground(Color.BLUE);
@@ -202,18 +197,9 @@ public class ScoreBoard extends JPanel implements ActionListener{
 			c.gridy = 3;
 			this.add(jr, c);
 			
-			/*JLabel j2 = new JLabel(" ");
-			c.gridx = 1;
-			c.gridy = 4;
-			this.add(j2, c);*/
-			
 			newRecord = false;
 		}
 		
-		/*JLabel j3 = new JLabel(" ");
-		c.gridx = 1;
-		c.gridy = 10;
-		this.add(j3, c);*/
 		
 		c.insets = new Insets(10,10,10,10);
 		

@@ -24,7 +24,6 @@ public class Boss extends Sprite{
 		loadImage("/" + Frame.getTheme() + "_boss.png");
 		this.getImageDimensions();
 		missiles = new ArrayList<>();
-		//this.loadSoundName(Frame.getTheme() + "boss.wav");
 		
 	}
 	

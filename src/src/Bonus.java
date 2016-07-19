@@ -29,7 +29,7 @@ public class Bonus extends Sprite{
 			imagename = "/" + Frame.getTheme() + "_bonus3.png";
 			break;
 		default:
-			System.out.print("Erreur bonus non trouvé");
+			System.out.print("Bonus not found");
 		}
 		
 		loadImage(imagename);

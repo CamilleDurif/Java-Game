@@ -3,16 +3,12 @@ package src;
 public class BackgroundSound {
 	
 	private String menuSound;
-	//private String gameSound;
-	//private String gameoverSound;
 	
 	private Sound sound;
 	
 	public BackgroundSound(){
 		
 		menuSound = "on.wav";
-		//gameSound = Frame.getTheme() + "_road.wav";
-		//gameoverSound = Frame.getTheme() + "_gameover.wav";
 		
 	}
 	

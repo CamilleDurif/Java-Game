@@ -73,6 +73,11 @@ public class Rules extends JPanel{
 		c.gridy = 2;
 		tab1.add(jinst2, c);
 		
+		JLabel jinst3 = new JLabel("Use P to pause the game");
+		Myfont.setMyfont(jinst3);
+		c.gridy = 3;
+		tab1.add(jinst3, c);
+		
 	}
 		
 	public void initTab2(){
@@ -82,19 +87,18 @@ public class Rules extends JPanel{
 		tab2.setBackground(new Color(255,255,255,120));
 		
 		GridBagConstraints c = new GridBagConstraints();
-		//c.insets = new Insets(10,10,10,10);
 		
 		ImageIcon i1 = new ImageIcon(getClass().getResource("/" + Frame.getTheme() + "_bonus1.png"));
 		JLabel jlab = new JLabel(i1);
-		//c.fill = GridBagConstraints.VERTICAL;
-		c.gridy = 3;
+		//c.fill = GridBagConstraints.BOTH;
+		c.gridy = 0;
 		c.gridx = 1;
 		tab2.add(jlab, c);
 		
 		JLabel jlab2 = new JLabel("Upgrade missile");
 		Myfont.setMyfont(jlab2);
-		//c.anchor = GridBagConstraints.EAST;
-		c.gridy = 3;
+		c.anchor = GridBagConstraints.WEST;
+		c.gridy = 0;
 		c.gridx = 2;
 		tab2.add(jlab2, c);
 		
@@ -109,70 +113,38 @@ public class Rules extends JPanel{
 		int i = 0;
 		
 		for(JLabel j : rules){
-			Myfont.setMyfont(j);
+			//Myfont.setMyfont(j);
+			Myfont.setFontSize(j, 10);
 			c.gridx = 6;
 			c.gridy = i;
+			c.anchor = GridBagConstraints.WEST;
 			tab2.add(j, c);
 			i++;
-		}
-		
-		/*JLabel jlab21 = new JLabel("1: Up to 5 missiles");
-		Myfont.setMyfont(jlab21);
-		c.anchor = GridBagConstraints.WEST;
-		c.gridx = 3;
-		c.gridy = 3;
-		tab2.add(jlab21, c);
-		
-		JLabel jlab22 = new JLabel("2: Infinite missiles");
-		Myfont.setMyfont(jlab22);
-		c.anchor = GridBagConstraints.WEST;
-		c.gridx = 3;
-		c.gridy = 4;
-		tab2.add(jlab22, c);
-		
-		JLabel jlab23 = new JLabel("3: On two rows");
-		Myfont.setMyfont(jlab23);
-		c.anchor = GridBagConstraints.WEST;
-		c.gridx = 3;
-		c.gridy = 5;
-		tab2.add(jlab23, c);
-		
-		JLabel jlab24 = new JLabel("4: On three rows");
-		Myfont.setMyfont(jlab24);
-		c.anchor = GridBagConstraints.WEST;
-		c.gridx = 3;
-		c.gridy = 6;
-		tab2.add(jlab24, c);
-		
-		JLabel jlab25 = new JLabel("5: On five rows");
-		Myfont.setMyfont(jlab25);
-		c.anchor = GridBagConstraints.WEST;
-		c.gridx = 3;
-		c.gridy = 7;
-		tab2.add(jlab25, c);*/
-		
+		}		
 		
 		ImageIcon i2 = new ImageIcon(getClass().getResource("/" + Frame.getTheme() + "_bonus2.png"));
 		JLabel jlab3 = new JLabel(i2);
-		c.gridy = 8;
+		c.gridy = 5;
 		c.gridx = 1;
 		tab2.add(jlab3, c);
 		
 		JLabel jlab4 = new JLabel("Best missile shoot");
 		Myfont.setMyfont(jlab4);
-		c.gridy = 8;
+		c.anchor = GridBagConstraints.WEST;
+		c.gridy = 5;
 		c.gridx = 2;
 		tab2.add(jlab4, c);
 		
 		ImageIcon i3 = new ImageIcon(getClass().getResource("/" + Frame.getTheme() + "_bonus3.png"));
 		JLabel jlab5 = new JLabel(i3);
-		c.gridy = 9;
+		c.anchor = GridBagConstraints.WEST;
+		c.gridy = 6;
 		c.gridx = 1;
 		tab2.add(jlab5, c);
 		
 		JLabel jlab6 = new JLabel("Immune to next damage");
 		Myfont.setMyfont(jlab6);
-		c.gridy = 9;
+		c.gridy = 6;
 		c.gridx = 2;
 		tab2.add(jlab6, c);
 		

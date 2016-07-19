@@ -13,10 +13,7 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Menu extends JPanel{
-	
-	//private final int B_WIDTH = 500;
-	//private final int B_HEIGHT = 380;
-	
+		
 	public Menu(){
 		
 		super(new GridBagLayout());
@@ -49,8 +46,6 @@ public class Menu extends JPanel{
        startButton.addActionListener(frame);
        optionButton.addActionListener(frame);
        rulesButton.addActionListener(frame);
-		/*ImageIcon ii = new ImageIcon(getClass().getResource("/fond4.png"));
-        //Image image = ii.getImage();*/
        
        this.setBackground(new Color(0,0,0,20));
 	}
