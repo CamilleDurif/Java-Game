@@ -16,10 +16,17 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
+/*
+ * The Options panel sets different options for the game
+ * The player can choose his name, that will be save for the score
+ * The skin of the game can be changed
+ * And the player can delete the best scores
+ * A GridBagLayout is used to manages the different components
+ */
 @SuppressWarnings("serial")
 public class Options extends JPanel implements ActionListener{
 	
-	private JTextField nameField;
+	private JTextField nameField; //textfield used to set the name of the player
 		
 	public Options(){
 		
@@ -36,7 +43,7 @@ public class Options extends JPanel implements ActionListener{
         this.add(nameLabel, c);
 		
 		nameField = new JTextField(playerName, 15); 
-		Myfont.setFontSize(nameField, 15);
+		Myfont.setFontSize(nameField, 15); //namefield is the default value of the textfield to show the name of the player
         c.gridy = 2;
         this.add(nameField, c);
         
@@ -61,6 +68,10 @@ public class Options extends JPanel implements ActionListener{
         okButton.addActionListener(frame);
 	}
 	
+	/*
+	 * A custom JOptionPane is used to confirm the deletion of the scores
+	 * It's a simple window with a yes/no buttons 
+	 */
 	public void showMessage(){
 		
 		Button yes = new Button("Yes");
@@ -73,9 +84,9 @@ public class Options extends JPanel implements ActionListener{
 		no.addActionListener(Frame.getFrame());
 		no.addActionListener(this);
 		
-		Button[] buttons = {yes, no};
+		Button[] buttons = {yes, no}; //this array will be used in the constructor of the JOptionPane
 		
-		JLabel jl = new JLabel("Are you sure ?");
+		JLabel jl = new JLabel("Are you sure ?"); //message displayed on the JOptionPane
 		Myfont.setMyfont(jl);
 		
 		UIManager.put("OptionPane.background", new Color(253,253,253));
@@ -85,10 +96,13 @@ public class Options extends JPanel implements ActionListener{
 		
 	}
 	
+	/*
+	 * The string playername frop the textfield is set in the Frame class
+	 */
 	public void setPlayerName(){
 		
 		if(Frame.getPlayerName() == "default name")
-			Frame.setPlayerName("Anonyme");
+			Frame.setPlayerName("Anonymous");
 		else
 			Frame.setPlayerName(nameField.getText());
 		
@@ -98,6 +112,10 @@ public class Options extends JPanel implements ActionListener{
 		return nameField.getText();
 	}	
 	
+	/*
+	 * This method is used to paint the background image of the menu
+	 * The image change according to the theme
+	 */
 	@Override
 	protected void paintComponent(Graphics g){
 		
@@ -106,13 +124,15 @@ public class Options extends JPanel implements ActionListener{
         Image image = ii.getImage();
 		g.drawImage(image, 0, 0, null);
 		
-		
-		g.drawRect(0, 0, 500, 500);
+		//a transparent white square is drawn on the background image to make it transparent		
 		g.setColor(new Color(255,255,255,200));
 		g.fillRect(0, 0, 500, 500);
 		
 	}
 	
+	/*
+	 * This method is used to notify that a button (yes or no) has been chosen in the JOptionPane
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e){
 		JOptionPane.getRootFrame().dispose();

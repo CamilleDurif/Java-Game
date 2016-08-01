@@ -3,15 +3,24 @@ package src;
 import java.util.ArrayList;
 import java.util.Random;
 
+/*
+ * Class that manages the enemy boss
+ * The boss moves randomly along the x axis and slowly move forward
+ * It has its own type of missile
+ * The boss shoot one missile when moving up or left
+ */
 public class Boss extends Sprite{
 	
 	private int life = 20;
-	private ArrayList<BossMissile> missiles;
+	private ArrayList<BossMissile> missiles; //array that contains all the bossmissile visible
 	
-	private boolean shooted = false;
+	private boolean shooted = false; //boolean to state if the boss has already shot
 	
-	private final int B_HEIGHT = 340;
+	private final int B_HEIGHT = 340; //height of the board
 	
+	/*
+	 * x and y are the coordinates used for the position of the boss
+	 */
 	public Boss(int x, int y){
 		
 		super(x,y);
@@ -27,6 +36,12 @@ public class Boss extends Sprite{
 		
 	}
 	
+	/*
+	 * There are two random numbers, one for the y position (rand) and one to determine if it will move or not (rand2)
+	 * The x increment is always equal to 5 pixels
+	 * There is 5 levels on the y+axis where the boss can move
+	 * In addition, the level is defined with the rand2 integer
+	 */
 	public void move(){
 
 		Random rand = new Random();
@@ -50,10 +65,14 @@ public class Boss extends Sprite{
 		}
 	}
 	
+	/*
+	 * If the boolean shooted is false, fire a bossmissile
+	 * The boolean is set to true after the shooting, it goes to false after a move
+	 */
 	public void shoot(){
 		
 		if(!shooted)
-			missiles.add(new BossMissile(x,y+20));
+			missiles.add(new BossMissile(x, y+20));
 		shooted = true;
 		
 	}

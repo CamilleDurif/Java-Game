@@ -11,6 +11,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/*
+ * Menu panel displayed at the beginning of the game
+ * It includes a welcome message and three buttons
+ * A GridBagLayout is used to position the components
+ */
 @SuppressWarnings("serial")
 public class Menu extends JPanel{
 		
@@ -22,9 +27,8 @@ public class Menu extends JPanel{
         
        JLabel instructions = new JLabel("Welcome");
        Myfont.setFontSize(instructions, 30);
-       c.insets = new Insets(10,10,10,10); //marges autour du composant. valable pour TOUS les composants
-       //c.gridx = 2; //position colonne
-       c.gridy = 0; //position ligne
+       c.insets = new Insets(10,10,10,10);
+       c.gridy = 0;
        this.add(instructions, c);
        
        Button startButton = new Button("New Game");
@@ -50,6 +54,10 @@ public class Menu extends JPanel{
        this.setBackground(new Color(0,0,0,20));
 	}
 	
+	/*
+	 * This method is used to paint the background image of the menu
+	 * The image change according to the theme
+	 */
 	@Override
 	protected void paintComponent(Graphics g){
 		
@@ -58,9 +66,8 @@ public class Menu extends JPanel{
         Image image = ii.getImage();
 		g.drawImage(image, 0, 0, null);
 		
-		
-		g.drawRect(0, 0, 500, 500);
-		g.setColor(new Color(255,255,255,200));
+		//a transparent white square is drawn on the background image to make it transparent
+		g.setColor(new Color(255,255,255,200)); //the fourth parameter, on a scale from 0 to 255, defines the opacity
 		g.fillRect(0, 0, 500, 500);
 		
 	}

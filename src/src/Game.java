@@ -26,7 +26,7 @@ import javax.swing.event.AncestorListener;
 @SuppressWarnings("serial")
 public class Game extends JPanel implements ActionListener{
 	
-	private final int ICRAFT_X = 50;
+	private final int ICRAFT_X = 30;
 	private final int ICRAFT_Y = 142;
 	private final int DELAY = 15;
 		
@@ -94,7 +94,7 @@ public class Game extends JPanel implements ActionListener{
 		
 		ingame = true;
 		score = 0;
-		life = 3;
+		life = 300;
 		spawned = 0;
 		inboss = false;
 		paused = false;
@@ -124,31 +124,17 @@ public class Game extends JPanel implements ActionListener{
 	
 	public void initScorepan(){
 		
-
 		scorepan = new JPanel(new GridBagLayout());
+		this.add(scorepan);
 		
-		scorepan.setPreferredSize(new Dimension(200,80));
+		scorepan.setPreferredSize(new Dimension(500,30));
 		
 		scorepan.setBackground(new Color(0,0,0,0));
 		
-		GridBagConstraints c = new GridBagConstraints();
+		paintScorepan();
 		
-		c.insets = new Insets(3,3,3,3);
+		craft.setShoot(5);
 		
-		scorelab = new JLabel("Score : " + score);
-		Myfont.setMyfont(scorelab);
-		c.fill = GridBagConstraints.BOTH;
-		c.gridy = 0;
-		c.anchor = GridBagConstraints.WEST;
-		scorepan.add(scorelab, c);
-		lifelab = new JLabel("Life : " + life);
-		Myfont.setMyfont(lifelab);
-		c.fill = GridBagConstraints.BOTH;
-		c.gridy = 1;
-		c.anchor = GridBagConstraints.WEST;
-		scorepan.add(lifelab, c);
-		
-		this.add(scorepan);
 		
 	}
 	
@@ -158,23 +144,35 @@ public class Game extends JPanel implements ActionListener{
 		
 		GridBagConstraints c = new GridBagConstraints();
 		
-		c.insets = new Insets(3,3,3,3);
+		c.insets = new Insets(0,0,0,80);
 		
-		scorelab = new JLabel("Score : " + score);
-		Myfont.setMyfont(scorelab);
-		c.fill = GridBagConstraints.BOTH;
-		c.gridy = 0;
-		c.anchor = GridBagConstraints.WEST;
-		scorepan.add(scorelab, c);
-		lifelab = new JLabel("Life : " + life);
-		Myfont.setMyfont(lifelab);
-		c.fill = GridBagConstraints.BOTH;
-		c.gridy = 1;
-		c.anchor = GridBagConstraints.WEST;
-		scorepan.add(lifelab, c);
+		paintScorepan();
 		
 		scorepan.validate();
 		scorepan.repaint();
+	}
+	
+	private void paintScorepan(){
+		
+		GridBagConstraints c = new GridBagConstraints();
+		
+		c.insets = new Insets(0,0,0,80);
+		
+		scorelab = new JLabel("Score : " + score + "pts");
+		Myfont.setMyfont(scorelab);
+		c.fill = GridBagConstraints.BOTH;
+		c.gridx = 1;
+		c.anchor = GridBagConstraints.NORTH;
+		scorepan.add(scorelab, c);
+		lifelab = new JLabel("Life : " + life);
+		Myfont.setMyfont(lifelab);
+		if(craft.isImmune()) lifelab.setForeground(Color.white);
+		c.insets = new Insets(3,3,3,80);
+		c.fill = GridBagConstraints.BOTH;
+		c.gridx = 0;
+		c.anchor = GridBagConstraints.NORTH;
+		scorepan.add(lifelab, c);
+		
 	}
 	
 	/*
@@ -429,9 +427,10 @@ public class Game extends JPanel implements ActionListener{
 	 * and there can be 10 aliens at the same time in maximum
 	 */
 	private void updateAliens(){
-
+		//TODO
 		//to move away
-		if(craft.getShoot()>0 && spawned > 50 && score < 30){
+		//boucle boss
+		if(craft.getShoot()>0 && spawned > 5 && score < 30){
 			inboss = true;
 			initBoss();
 			return;
@@ -468,6 +467,26 @@ public class Game extends JPanel implements ActionListener{
 		
 		Random rand = new Random();
 		int spawn = rand.nextInt(1000);
+		
+		if(spawn > 995 && walls.isEmpty() && craft.getShoot() > 1){
+			int rd = (int)(Math.random()*5);
+			
+			if(rd != 0){
+				walls.add(new Wall(400, 20));
+				ennemies[0][2] = 1;}
+			if(rd != 1) {
+				walls.add(new Wall(400, 81));
+				ennemies[1][2] = 1;}
+			if(rd != 2) {
+				walls.add(new Wall(400, 142));
+				ennemies[2][2] = 1;}
+			if(rd != 3) {
+				walls.add(new Wall(400, 203));
+				ennemies[3][2] = 1;}
+			if(rd != 4) {
+				walls.add(new Wall(400, 264));
+				ennemies[4][2] = 1;}
+		}
 		
 		if(spawn > 990 && walls.size()<=2){
 			int posY = rand.nextInt(B_HEIGHT);
@@ -513,13 +532,22 @@ public class Game extends JPanel implements ActionListener{
 			int posY = rand.nextInt(B_HEIGHT);
 			int posX = rand.nextInt(B_WIDTH) + 400;
 			
-			if(posY < 76) posY = 20;
+			if(posY < 76 && ennemies[0][2] == 0) lives.add(new Life(posX, 20));
+			else if(posY > 76 && posY < 132 && ennemies[1][2] == 0) lives.add(new Life(posX, 81));
+			else if(posY > 132 && posY < 188 && ennemies[2][2] == 0) lives.add(new Life(posX, 142));
+			else if(posY > 188 && posY < 244 && ennemies[3][2] == 0) lives.add(new Life(posX, 203));
+			else if(posY > 244 && posY < 305 && ennemies[4][2] == 0) lives.add(new Life(posX, 264));
+		
+			
+			/*if(posY < 76) posY = 20;
 			else if(posY < 132) posY = 81;
 			else if(posY < 188) posY = 142;
 			else if(posY < 244) posY = 203;
 			else posY = 264;
 		
-			lives.add(new Life(posX, posY));}
+			lives.add(new Life(posX, posY));*/
+			
+			}
 		
 		for (int i = 0; i <lives.size(); i++){
 			Life l = lives.get(i);
@@ -624,13 +652,14 @@ public class Game extends JPanel implements ActionListener{
 
             if (rC.intersects(rA)) {
             	alien.setVisible(false);
-            	if(craft.isImmune())
+            	if(craft.isImmune()){
             		craft.setImmune(false);
+            		updateScorepan();}
             	else{
             		life--;
             		updateScorepan();
             		craft.downShoot();
-            		if(Craft.getCraft().getShoot() > 15)
+            		if(craft.getShoot() > 15)
                     	craft.setShoot(2);
             	}
                 alien.playSound();
@@ -641,12 +670,13 @@ public class Game extends JPanel implements ActionListener{
         	Rectangle rA2 = alien.getBounds();
         	if(rC.intersects(rA2)){
         		alien.setVisible(false);
-        		if(craft.isImmune())
+        		if(craft.isImmune()){
         			craft.setImmune(false);
+        			updateScorepan();}
         		else{
         			life -= 2;
         			craft.downShoot();
-        			if(Craft.getCraft().getShoot() > 15)
+        			if(craft.getShoot() > 15)
                     	craft.setShoot(2);
         		}
         	}  
@@ -659,6 +689,7 @@ public class Game extends JPanel implements ActionListener{
         		if(craft.isImmune()){
         			craft.setImmune(false);
         			wall.setVisible(false);
+        			updateScorepan();
         		}
         		else{
         			craft.setVisible(false);
@@ -686,11 +717,12 @@ public class Game extends JPanel implements ActionListener{
         		else if(b.getBonusType() == 1){
         			craft.upShoot();
         			if(craft.getShoot() == 21)
-        				craft.setShoot(3);
+        				craft.setShoot(4);
         			if(craft.getShoot() == 6)
         				craft.setShoot(5);}
-        		else
+        		else{
         			craft.setImmune(true);
+        			updateScorepan();}
         	}
         }
        
@@ -729,10 +761,17 @@ public class Game extends JPanel implements ActionListener{
 	            
 	            if(rC.intersects(rMB)){
 	            	n.setVisible(false);
-	            	life--;
+	            	if(craft.isImmune())
+	            		craft.setImmune(false);
+	            	else
+	            		life--;
+	            	craft.downShoot();
+            		if(craft.getShoot() > 15)
+                    	craft.setShoot(2);
+            		if(craft.getShoot() < 2)
+            			craft.setShoot(2);
 	            	updateScorepan();
-	            	if(craft.getShoot() > 1)
-	            		craft.downShoot();
+	            	
 	            }
             }
 	    }
@@ -765,8 +804,8 @@ public class Game extends JPanel implements ActionListener{
             		if(craft.getShoot() != 20 ){
                 		m.setVisible(false);
                 	}
-            		alien.count--; 
-            		if(alien.count == 0){
+            		alien.setLife(alien.getLife()-1);
+            		if(alien.getLife() == 0){
             			alien.setVisible(false);
             			score+=2;
             			updateScorepan();

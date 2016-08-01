@@ -8,6 +8,13 @@ import java.io.InputStream;
 
 import javax.swing.JComponent;
 
+/*
+ * This class is used to define a custom police either for a component (like buttons) or Graphics (for the paintComponent method)
+ * In both case, there is two different function (the second one specifies the size of the font)
+ * All the functions are static so they can be called directly
+ * Some code was taken from this page :
+ * http://www.java2s.com/Code/Java/2D-Graphics-GUI/Loadfontfromttffile.htm
+ */
 public class Myfont {
 
 	

@@ -6,6 +6,10 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 
+/*
+ * Custom button class to manages their design
+ * The MouseListener interface is used to change the design for mouseover
+ */
 @SuppressWarnings("serial")
 public class Button extends JButton implements MouseListener{
 	
@@ -15,7 +19,7 @@ public class Button extends JButton implements MouseListener{
 		
 		this.setBackground(Color.white);
 		
-		Myfont.setMyfont(this);
+		Myfont.setMyfont(this);// custom font for the text on the button
 		
 		this.addMouseListener(this);
 		this.setFocusable(false);

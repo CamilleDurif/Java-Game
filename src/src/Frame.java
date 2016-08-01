@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class Frame extends JFrame implements ActionListener{
 	
-	public static Frame frame;
+	private static Frame frame;
 	
 	private CardLayout cl = new CardLayout(); //this layout is used to switch from different JPanel
 	private JPanel content = new JPanel(); //this JPanel will contain the panel for the game of the panel for the game over screen
@@ -181,7 +181,7 @@ public class Frame extends JFrame implements ActionListener{
 	public static String getPlayerName(){
 		
 		if(playerName == null)
-			return "Anonyme";
+			return "Anonymous";
 		
 		return playerName;
 		

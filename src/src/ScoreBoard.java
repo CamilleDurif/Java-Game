@@ -29,7 +29,7 @@ public class ScoreBoard extends JPanel implements ActionListener{
 	
 	private ArrayList<Score> scorelist; //list of different scores
 	
-	private static final String fscore = "score.dat"; //the name of the file.dat wich contain the list
+	private static final String fscore = "score.dat"; //the name of the file.dat which contains the list
 	
 	private boolean newRecord = false; //set to true if a new record is set at the end of a game
 	private int index = 0; //to know where the new score is (for red label)
@@ -47,7 +47,7 @@ public class ScoreBoard extends JPanel implements ActionListener{
 		if(!scoreFile.exists()){
 			try{
 				scoreFile.createNewFile();
-				scorelist.add(new Score("winner", 100));
+				scorelist.add(new Score("Winner", 100));
 				scorelist.add(new Score("Looser", 0));
 				updateScoreFile();
 			}catch(IOException e){

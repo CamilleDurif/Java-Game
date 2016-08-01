@@ -15,20 +15,28 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 
+/*
+ * Rules panel is composed of two pans in a JTabbedPane
+ * The first pan shows the commands and the second one the different kind of bonuses
+ * It also contains another JPanel for the EXIT button
+ */
 @SuppressWarnings("serial")
 public class Rules extends JPanel{
 	
-	private JPanel tab1 = new JPanel();
-	private JPanel tab2 = new JPanel();	
+	private JPanel tab1; //command tab
+	private JPanel tab2; // bonus tab
 	
 	public Rules(){
 		
 		super(new BorderLayout());
 		
+		tab1 = new JPanel();
+		tab2 = new JPanel();
+				
 		initTab1();
 		initTab2();
 		
-		UIManager.put("TabbedPane.contentOpaque", Boolean.FALSE);
+		UIManager.put("TabbedPane.contentOpaque", Boolean.FALSE); //make the background of the tabs transparent
 		JTabbedPane tab = new JTabbedPane();
 		tab.setOpaque(false);
 		Myfont.setMyfont(tab);
@@ -87,10 +95,12 @@ public class Rules extends JPanel{
 		tab2.setBackground(new Color(255,255,255,120));
 		
 		GridBagConstraints c = new GridBagConstraints();
+
+		c.insets = new Insets(0,0,5,15);
 		
-		ImageIcon i1 = new ImageIcon(getClass().getResource("/" + Frame.getTheme() + "_bonus1.png"));
+		ImageIcon i1 = new ImageIcon(getClass().getResource("/" + Frame.getTheme() + "_bonus3rules.png"));
 		JLabel jlab = new JLabel(i1);
-		//c.fill = GridBagConstraints.BOTH;
+		c.fill = GridBagConstraints.BOTH;
 		c.gridy = 0;
 		c.gridx = 1;
 		tab2.add(jlab, c);
@@ -113,43 +123,59 @@ public class Rules extends JPanel{
 		int i = 0;
 		
 		for(JLabel j : rules){
-			//Myfont.setMyfont(j);
 			Myfont.setFontSize(j, 10);
-			c.gridx = 6;
-			c.gridy = i;
+			c.gridx = 2;
+			c.gridy = i+1;
 			c.anchor = GridBagConstraints.WEST;
 			tab2.add(j, c);
 			i++;
 		}		
 		
-		ImageIcon i2 = new ImageIcon(getClass().getResource("/" + Frame.getTheme() + "_bonus2.png"));
+		ImageIcon i2 = new ImageIcon(getClass().getResource("/" + Frame.getTheme() + "_bonus2rules.png"));
 		JLabel jlab3 = new JLabel(i2);
-		c.gridy = 5;
+		c.gridy = 6;
 		c.gridx = 1;
 		tab2.add(jlab3, c);
 		
-		JLabel jlab4 = new JLabel("Best missile shoot");
+		JLabel jlab4 = new JLabel("Best missile shot");
 		Myfont.setMyfont(jlab4);
 		c.anchor = GridBagConstraints.WEST;
-		c.gridy = 5;
+		c.gridy = 6;
 		c.gridx = 2;
 		tab2.add(jlab4, c);
 		
-		ImageIcon i3 = new ImageIcon(getClass().getResource("/" + Frame.getTheme() + "_bonus3.png"));
+		ImageIcon i3 = new ImageIcon(getClass().getResource("/" + Frame.getTheme() + "_bonus1rules.png"));
 		JLabel jlab5 = new JLabel(i3);
 		c.anchor = GridBagConstraints.WEST;
-		c.gridy = 6;
+		c.gridy = 7;
 		c.gridx = 1;
 		tab2.add(jlab5, c);
 		
 		JLabel jlab6 = new JLabel("Immune to next damage");
 		Myfont.setMyfont(jlab6);
-		c.gridy = 6;
+		c.gridy = 7;
 		c.gridx = 2;
 		tab2.add(jlab6, c);
 		
+		ImageIcon i4 = new ImageIcon(getClass().getResource("/" + Frame.getTheme() + "_liferules.png"));
+		JLabel jlab7 = new JLabel(i4);
+		c.anchor = GridBagConstraints.WEST;
+		c.gridy = 8;
+		c.gridx = 1;
+		tab2.add(jlab7, c);
+		
+		JLabel jlab8 = new JLabel("1UP");
+		Myfont.setMyfont(jlab8);
+		c.gridy = 8;
+		c.gridx = 2;
+		tab2.add(jlab8, c);
+		
 	}
 	
+	/*
+	 * This method is used to paint the background image of the rules
+	 * The image change according to the theme
+	 */
 	@Override
 	protected void paintComponent(Graphics g){
 		
@@ -158,7 +184,7 @@ public class Rules extends JPanel{
         Image image = ii.getImage();
 		g.drawImage(image, 0, 0, null);
 		
-		
+		//a transparent white square is drawn on the background image to make it transparent
 		g.drawRect(0, 0, 500, 500);
 		g.setColor(new Color(255,255,255,200));
 		g.fillRect(0, 0, 500, 500);
