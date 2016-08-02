@@ -4,6 +4,10 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 
+/*
+ * This class is the pattern for every sprite of the game.
+ * It contains every kind of information related to a sprite. 
+ */
 public class Sprite {
 	
 	//coordinates of the sprite
@@ -24,13 +28,19 @@ public class Sprite {
         this.y = y;
         vis = true;
     }
-
+    
+    /*
+     * Load the image associated with the sprite (given in parameters)
+     */
     protected void loadImage(String imageName) {
 
         ImageIcon ii = new ImageIcon(getClass().getResource(imageName));
         image = ii.getImage();
     }
     
+    /*
+     * Load the sound associated with the sprite (given in prameters)
+     */
     protected void loadSoundName(String soundName){
     	this.soundName = soundName;
     }
