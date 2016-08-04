@@ -152,7 +152,7 @@ public class Game extends JPanel implements ActionListener{
 		
 		paintScorepan();
 		
-		craft.setShoot(5);
+		craft.setShoot(2);
 		
 		
 	}
@@ -509,7 +509,7 @@ public class Game extends JPanel implements ActionListener{
 		//TODO
 		//to move away
 		//boucle boss
-		if(craft.getShoot()>0 && spawned > 5 && score < 30){
+		if(craft.getShoot()>0 && spawned > 20 && score < 30){
 			inboss = true;
 			initBoss();
 			return;
