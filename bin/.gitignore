@@ -1,7 +1,20 @@
+/bonus.wav
+/explosion.wav
+/explosion2.wav
+/gyarados.wav
+/laser_shoot.wav
+/magicarpe.wav
+/magikarp.wav
+/on.wav
+/poke_shoot.wav
+/pokemon_boss.wav
 /pokemon_gameover.wav
 /pokemon_heal.wav
 /pokemon_road.wav
 /theme2_boss.wav
+/theme2_gameover.wav
+/theme2_heal.wav
+/theme2_road.wav
 /fond5.png
 /fondtest.png
 /font.ttf
@@ -9,9 +22,6 @@
 /myfont.ttf
 /pokemon_alien.png
 /pokemon_alien2.png
-/theme2_gameover.wav
-/theme2_heal.wav
-/theme2_road.wav
 /pokemon_alien45.png
 /pokemon_back.png
 /pokemon_bonus1.png
@@ -38,7 +48,6 @@
 /pokemon_wall3.png
 /pokemon_wall32.png
 /pokemonfont.ttf
-/src/
 /startup.gif
 /theme2_alien.png
 /theme2_alien2.png
@@ -51,6 +60,7 @@
 /theme2_bonus3.png
 /theme2_bonus3rules.png
 /theme2_boss.png
+/src/
 /theme2_bossmissile.png
 /theme2_life.png
 /theme2_liferules.png
